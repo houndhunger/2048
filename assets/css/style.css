@@ -1,6 +1,36 @@
+/* Google font import */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap')
+
 /* Browser default styles override */
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    background-color: #eeeeee;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+main {
+    flex: 1 0 auto;
+    margin-top: 55px;
+    padding: 30px;
+    display: flex; 
+    justify-content: center;
+  }
+
+  
+#game-area {
+    background-color: grey;
+    width: 500px;
+    height: 500px;
+    min-width: 50%;
+    justify-content: flex-start;
 }
