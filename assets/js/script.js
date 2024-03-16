@@ -22,18 +22,16 @@ drawGameBoard();
 
 // genareate new number
 function genNewNumber() {
-    // check end-lost, if not continue 
+    //check gsme over, if not continue
     do {
         randomNumber = Math.floor(Math.random() * (width * width))
-        square = gameField.childNodes[randomNumber];
-    } while (square === 0);
-    square.innerHTML = 2;
-    squares[randomNumber] = 2;
-    styleNumber(square, 2);
-
+    } while (squares[randomNumber].innerHTML !=0);
+    squares[randomNumber].innerHTML = 2;
+    styleNumber(squares[randomNumber], 2);
+    console.log("R", randomNumber);
 }
 
-//style number
+// number style
 function styleNumber(square, style) {
     let colour = '';
     switch (style) {
@@ -68,10 +66,58 @@ function styleNumber(square, style) {
         case 15: colour = '#ff0000';
             break;
         default: colour = '';
-    }
+    }/*
     if (style === 0) {
-    square.style.color = '#bbbbbb';
+        square.style.color = '#bbbbbb';
     }
     else
-    square.style.color = '#000000';
+        square.style.color = '#000000';*/
+}
+
+// game controls - read arrow keys
+document.addEventListener('keydown', function (event) {
+    switch (event.key) {
+        case 'ArrowUp':
+            // Action for the up arrow key
+            console.log('Up arrow key pressed');
+            break;
+        case 'ArrowDown':
+            // Action for the down arrow key
+            console.log('Down arrow key pressed');
+            slideDown();
+            break;
+        case 'ArrowLeft':
+            // Action for the left arrow key
+            console.log('Left arrow key pressed');
+            slideLeft();
+            break;
+        case 'ArrowRight':
+            // Action for the right arrow key
+            console.log('Right arrow key pressed');
+            slideRight();
+            break;
+        default:
+            // Action for other keys (if needed)
+            break;
+    }
+});
+
+// slide left
+function slideLeft() {
+    for (let i = 0; i < width; i++) {
+        let shift = 0;
+        for (let j = 0; j < width; j++) {
+            let ind = i * width + j;
+            //if (shift > 0) {
+                squares[ind - shift].innerHTML = squares[ind].innerHTML; //what are squares for?
+                gameField.childNodes[ind - shift].innerHTML = squares[ind - shift].innerHTML;
+            //}   
+            if (squares[ind].innerHTML == 0) shift++; 
+            else if (shift > 0 && squares[ind].innerHTML != 0) {
+                squares[ind].innerHTML = 0;
+                gameField.childNodes[ind].innerHTML = 0;  
+            }    
+        }
+    }
+    genNewNumber();
 }
