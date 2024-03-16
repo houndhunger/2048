@@ -9,9 +9,9 @@ const width = 4;
 function drawGameBoard() {
     for (let i = 0; i < width * width; i++) {
         square = document.createElement('div');
-        square.innerHTML = 0;
+        square.innerHTML = '0';
         gameField.appendChild(square);
-        styleNumber(square, 0);
+        styleNumber(square, '0');
         squares.push(square);
     }
     genNewNumber();
@@ -25,120 +25,191 @@ function genNewNumber() {
     //check gsme over, if not continue
     do {
         randomNumber = Math.floor(Math.random() * (width * width))
-    } while (squares[randomNumber].innerHTML !=0);
-    squares[randomNumber].innerHTML = 2;
-    styleNumber(squares[randomNumber], 2);
-    console.log("R", randomNumber);
+    } while (squares[randomNumber].innerHTML != 0);
+    squares[randomNumber].innerHTML = '2';
+    styleNumber(squares[randomNumber], '2');
 }
 
 // number style
 function styleNumber(square, style) {
-    let colour = '';
-    switch (style) {
-        case 1: colour = '#ffffff';
-            break;
-        case 2: colour = '#ffffdd';
-            break;
-        case 3: colour = '#ffffaa';
-            break;
-        case 4: colour = '#ffff88';
-            break;
-        case 5: colour = '#ffff66';
-            break;
-        case 6: colour = '#ffff44';
-            break;
-        case 7: colour = '#ffff22';
-            break;
-        case 8: colour = '#ffff00';
-            break;
-        case 9: colour = '#ffdd00';
-            break;
-        case 10: colour = '#ffaa00';
-            break;
-        case 11: colour = '#ff8800';
-            break;
-        case 12: colour = '#ff6600';
-            break;
-        case 13: colour = '#ff4400';
-            break;
-        case 14: colour = '#ff2200';
-            break;
-        case 15: colour = '#ff0000';
-            break;
-        default: colour = '';
-    }/*
-    if (style === 0) {
-        square.style.color = '#bbbbbb';
+    const colorMap = {
+        '2': '#fff',
+        '4': '#ffc',
+        '8': '#ff9',
+        '16': '#ff6',
+        '32': '#ff3',
+        '64': '#ff0',
+        '128': '#fc0',
+        '256': '#f90',
+        '512': '#f60',
+        '1024': '#f30',
+        '2048': '#f00',
+    };
+    square.style.backgroundColor = colorMap[style] || '';
+    if (style === '0') {
+        square.style.color = '#555'; //'#bbb'
     }
     else
-        square.style.color = '#000000';*/
+        square.style.color = '#000';
 }
 
 // game controls - read arrow keys
 document.addEventListener('keydown', function (event) {
     switch (event.key) {
         case 'ArrowUp':
-            // Action for the up arrow key
-            console.log('Up arrow key pressed');
             slideUp();
+            mergeUp();
+            slideUp();
+            genNewNumber();
             break;
         case 'ArrowDown':
-            // Action for the down arrow key
-            console.log('Down arrow key pressed');
             slideDown();
+            mergeDown();
+            slideDown();
+            genNewNumber();
             break;
         case 'ArrowLeft':
-            // Action for the left arrow key
-            console.log('Left arrow key pressed');
             slideLeft();
+            mergeLeft();
+            slideLeft();
+            genNewNumber();
             break;
         case 'ArrowRight':
-            // Action for the right arrow key
-            console.log('Right arrow key pressed');
             slideRight();
+            mergeRight();
+            slideRight();
+            genNewNumber();
             break;
         default:
-            // Action for other keys (if needed)
             break;
     }
 });
 
-// slide left
 function slideLeft() {
     for (let i = 0; i < width; i++) {
         let shift = 0;
         for (let j = 0; j < width; j++) {
             let ind = i * width + j;
-            //if (shift > 0) {
-                squares[ind - shift].innerHTML = squares[ind].innerHTML;
-               // gameField.childNodes[ind - shift].innerHTML = squares[ind - shift].innerHTML;
-            //}   
-            if (squares[ind].innerHTML == 0) shift++; 
+            squares[ind - shift].innerHTML = squares[ind].innerHTML;
+            styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
+            if (squares[ind].innerHTML === '0') shift++;
             else if (shift > 0 && squares[ind].innerHTML != 0) {
-                squares[ind].innerHTML = 0;
-                //gameField.childNodes[ind].innerHTML = 0;  
-            }    
+                squares[ind].innerHTML = '0';
+                styleNumber(squares[ind], squares[ind].innerHTML);
+            }
         }
     }
-    genNewNumber();
 }
 
-// slide up
+function slideRight() {
+    for (let i = width - 1; i >= 0; i--) {
+        let shift = 0;
+        for (let j = width - 1; j >= 0; j--) {
+            let ind = i * width + j;
+            squares[ind + shift].innerHTML = squares[ind].innerHTML;
+            styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
+            if (squares[ind].innerHTML === '0') shift++;
+            else if (shift > 0 && squares[ind].innerHTML != 0) {
+                squares[ind].innerHTML = '0';
+                styleNumber(squares[ind], squares[ind].innerHTML);
+            }
+        }
+    }
+}
+
 function slideUp() {
     for (let i = 0; i < width; i++) {
         let shift = 0;
         for (let j = 0; j < width; j++) {
             let ind = j * width + i;
-            //if (shift > 0) {
-                squares[ind - shift].innerHTML = squares[ind].innerHTML;
-               // gameField.childNodes[ind - shift].innerHTML = squares[ind - shift].innerHTML;
-            //}   
-            if (squares[ind].innerHTML == 0) shift = shift + width; 
+            squares[ind - shift].innerHTML = squares[ind].innerHTML; 
+            styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
+            if (squares[ind].innerHTML === '0') shift = shift + width;
             else if (shift > 0 && squares[ind].innerHTML != 0) {
-                squares[ind].innerHTML = 0;
-                //gameField.childNodes[ind].innerHTML = 0;  
-            }    
+                squares[ind].innerHTML = '0';
+                styleNumber(squares[ind], squares[ind].innerHTML);
+            }
         }
     }
-    genNewNumber();
+}
+
+function slideDown() {
+    for (let i = width - 1; i >= 0; i--) {
+        let shift = 0;
+        for (let j = width - 1; j >= 0; j--) {
+            let ind = j * width + i;
+            squares[ind + shift].innerHTML = squares[ind].innerHTML; 
+            styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
+            if (squares[ind].innerHTML === '0') shift = shift + width;
+            else if (shift > 0 && squares[ind].innerHTML != 0) {
+                squares[ind].innerHTML = '0';
+                styleNumber(squares[ind], squares[ind].innerHTML);
+            }
+        }
+    }
+}
+
+function mergeLeft() {
+    for (let i = 0; i <= width - 1; i++) {
+        let shift = 0;
+        for (let j = 0; j <= width - 2; j++) {
+            let ind = i * width + j;
+            
+            if (squares[ind].innerHTML === squares[ind + 1].innerHTML) {
+                squares[ind].innerHTML *= 2;
+                styleNumber(squares[ind], squares[ind].innerHTML);
+                squares[ind + 1].innerHTML = '0';
+                styleNumber(squares[ind + 1], squares[ind + 1].innerHTML);
+                j++;
+            }
+        }
+    }
+}
+
+function mergeRight() {
+    for (let i = width - 1; i >= 1; i--) {
+        let shift = 0;
+        for (let j = width - 1; j >= 0; j--) {
+            let ind = i * width + j;
+            if (squares[ind].innerHTML === squares[ind - 1].innerHTML) {
+                squares[ind].innerHTML *= 2;
+                styleNumber(squares[ind], squares[ind].innerHTML);
+                squares[ind - 1].innerHTML = '0';
+                styleNumber(squares[ind - 1], squares[ind - 1].innerHTML);
+                j--;
+            }
+        }
+    }
+}
+
+function mergeUp() {
+    for (let i = 0; i <= width - 1; i++) {
+        let shift = 0;
+        for (let j = 0; j <= width - 2; j++) {
+            let ind = j * width + i;
+            if (squares[ind].innerHTML === squares[ind + width].innerHTML) {
+                squares[ind].innerHTML *= 2;
+                styleNumber(squares[ind], squares[ind].innerHTML);
+                squares[ind + width].innerHTML = '0';
+                styleNumber(squares[ind + width], squares[ind + width].innerHTML);
+                j++;
+            }
+        }
+    }
+}
+
+function mergeDown() {
+    for (let i = width - 1; i >= 0; i--) {
+        let shift = 0;
+        for (let j = width - 1; j >= 1; j--) {
+            let ind = j * width + i;
+            if (squares[ind].innerHTML === squares[ind - width].innerHTML) {
+                squares[ind].innerHTML *= 2;
+                styleNumber(squares[ind], squares[ind].innerHTML);
+                squares[ind - width].innerHTML = '0';
+                styleNumber(squares[ind - width], squares[ind - width].innerHTML);
+                j--;
+            }
+        }
+    }
 }
