@@ -32,3 +32,17 @@ main {
     height: 500px;
     justify-content: flex-start;
 }
+
+#game-filed div {
+    width: 100px;
+    height: 100px;
+    margin: 11px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #bbbbbb;
+    border: 5px solid #444444;
+    text-align: center;
+    font-weight: bold;
+    font-size: 45px;
+}
