@@ -80,6 +80,7 @@ document.addEventListener('keydown', function (event) {
         case 'ArrowUp':
             // Action for the up arrow key
             console.log('Up arrow key pressed');
+            slideUp();
             break;
         case 'ArrowDown':
             // Action for the down arrow key
@@ -109,13 +110,33 @@ function slideLeft() {
         for (let j = 0; j < width; j++) {
             let ind = i * width + j;
             //if (shift > 0) {
-                squares[ind - shift].innerHTML = squares[ind].innerHTML; //what are squares for?
-                gameField.childNodes[ind - shift].innerHTML = squares[ind - shift].innerHTML;
+                squares[ind - shift].innerHTML = squares[ind].innerHTML;
+               // gameField.childNodes[ind - shift].innerHTML = squares[ind - shift].innerHTML;
             //}   
             if (squares[ind].innerHTML == 0) shift++; 
             else if (shift > 0 && squares[ind].innerHTML != 0) {
                 squares[ind].innerHTML = 0;
-                gameField.childNodes[ind].innerHTML = 0;  
+                //gameField.childNodes[ind].innerHTML = 0;  
+            }    
+        }
+    }
+    genNewNumber();
+}
+
+// slide up
+function slideUp() {
+    for (let i = 0; i < width; i++) {
+        let shift = 0;
+        for (let j = 0; j < width; j++) {
+            let ind = j * width + i;
+            //if (shift > 0) {
+                squares[ind - shift].innerHTML = squares[ind].innerHTML;
+               // gameField.childNodes[ind - shift].innerHTML = squares[ind - shift].innerHTML;
+            //}   
+            if (squares[ind].innerHTML == 0) shift = shift + width; 
+            else if (shift > 0 && squares[ind].innerHTML != 0) {
+                squares[ind].innerHTML = 0;
+                //gameField.childNodes[ind].innerHTML = 0;  
             }    
         }
     }
