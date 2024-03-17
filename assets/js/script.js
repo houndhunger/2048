@@ -33,18 +33,19 @@ function genNewNumber() {
 // number style
 function styleNumber(square, style) {
     const colorMap = {
-        '2': '#fff',
-        '4': '#ffc',
-        '8': '#ff9',
-        '16': '#ff6',
-        '32': '#ff3',
-        '64': '#ff0',
-        '128': '#fc0',
+        '2': '#afa',
+        '4': '#6f6',
+        '8': '#1f1',
+        '16': '#3f0',
+        '32': '#8f0',
+        '64': '#cf0',
+        '128': '#fd0',
         '256': '#f90',
-        '512': '#f60',
-        '1024': '#f30',
+        '512': '#f40',
+        '1024': '#f00',
         '2048': '#f00',
     };
+        
     square.style.backgroundColor = colorMap[style] || '';
     if (style === '0') {
         square.style.color = '#555'; //'#bbb'
@@ -54,36 +55,40 @@ function styleNumber(square, style) {
 }
 
 // game controls - read arrow keys
-document.addEventListener('keydown', function (event) {
+// Define the event listener function
+function handleKeyDown(event) {
     switch (event.key) {
         case 'ArrowUp':
             slideUp();
             mergeUp();
             slideUp();
-            genNewNumber();
+            (checkWin() || checkLost()) ? document.removeEventListener('keydown', handleKeyDown) : genNewNumber();
             break;
         case 'ArrowDown':
             slideDown();
             mergeDown();
             slideDown();
-            genNewNumber();
+            (checkWin() || checkLost()) ? document.removeEventListener('keydown', handleKeyDown) : genNewNumber();
             break;
         case 'ArrowLeft':
             slideLeft();
             mergeLeft();
             slideLeft();
-            genNewNumber();
+            (checkWin() || checkLost()) ? document.removeEventListener('keydown', handleKeyDown) : genNewNumber();
             break;
         case 'ArrowRight':
             slideRight();
             mergeRight();
             slideRight();
-            genNewNumber();
+            (checkWin() || checkLost()) ? document.removeEventListener('keydown', handleKeyDown) : genNewNumber();
             break;
         default:
             break;
     }
-});
+}
+
+// Add the event listener
+document.addEventListener('keydown', handleKeyDown);
 
 function slideLeft() {
     for (let i = 0; i < width; i++) {
@@ -154,7 +159,6 @@ function mergeLeft() {
         let shift = 0;
         for (let j = 0; j <= width - 2; j++) {
             let ind = i * width + j;
-            
             if (squares[ind].innerHTML === squares[ind + 1].innerHTML) {
                 squares[ind].innerHTML *= 2;
                 styleNumber(squares[ind], squares[ind].innerHTML);
@@ -211,5 +215,37 @@ function mergeDown() {
                 j--;
             }
         }
+    }
+}
+
+function checkWin() {
+    if (squares.some(square => square.innerHTML === '2048')) {
+        document.getElementById('popup-message').innerHTML = 'You Won! :)';
+        document.getElementById("popup-container").style.display = "flex";
+        document.getElementById("start-again-btn").addEventListener("click", function() {
+            location.reload();
+            });
+            document.getElementById("cancel-btn").addEventListener("click", function() {
+            document.getElementById("popup-container").style.display = "none";
+            });
+        return true;
+    } 
+    return false;
+}
+
+
+function checkLost() {
+    if (!squares.some(square => square.innerHTML === '0')) {     
+        document.getElementById('popup-message').innerHTML = 'You Lost :(';
+        document.getElementById("popup-container").style.display = "flex";
+        document.getElementById("start-again-btn").addEventListener("click", function() {
+            location.reload();
+          });
+          document.getElementById("cancel-btn").addEventListener("click", function() {
+            document.getElementById("popup-container").style.display = "none";
+          });
+        return true;
+    } else {
+        return false;
     }
 }
