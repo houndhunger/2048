@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <title>2048</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <title>2048</title>
 </head>
+
 <body>
   <header>
-    <h1 id="title">2048</h1>
-    <div id="best-score">
-      <h2>best</h2>
-      <div>0</div>
+    <div id="title">
+      <h1 id="main-title">2048</h1>
+      <h2 id="sub-title">game</h2>
     </div>
-    <div id="score">    
-      <h2 id="score-title">score</h2>
-      <div>0</div>
+    <div>
+      <div id="best-score">
+        <h2>best</h2>
+        <div>0</div>
+      </div>
+      <div id="score">
+        <h2 id="score-title">score</h2>
+        <div>0</div>
+      </div>
     </div>
-    <h2 id="sub-title">game</h2> 
     <p id="description">Join numbered tiles to reach the '2048' tile!</p>
   </header>
   <main>
@@ -33,10 +39,11 @@
   </main>
   <footer>
     <ul>
-      <li>author: Daniel Pribula</li>
-      <li>email: daniel.pribula@gmail.com</li>
+      <li>author: <span class="break"></span>Daniel Pribula</li>
+      <li>email: <span class="break"></span>daniel.pribula@gmail.com</li>
     </ul>
   </footer>
   <script src="assets/js/script.js"></script>
 </body>
+
 </html>
