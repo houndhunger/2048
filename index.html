@@ -7,18 +7,36 @@
     <title>2048</title>
 </head>
 <body>
-    <main>
-        <h1>2048</h1>
-        <div id="game-filed"></div>
-        <div id="popup-container">
-            <div id="popup">
-              <p id="popup-message"></p>
-              <p>Start again?</p>
-              <button id="start-again-btn">Start Again</button>
-              <button id="cancel-btn">Cancel</button>
-            </div>
-          </div>
-    </main>
-<script src="assets/js/script.js"></script>
+  <header>
+    <h1 id="title">2048</h1>
+    <div id="best-score">
+      <h2>best</h2>
+      <div>0</div>
+    </div>
+    <div id="score">    
+      <h2 id="score-title">score</h2>
+      <div>0</div>
+    </div>
+    <h2 id="sub-title">game</h2> 
+    <p id="description">Join numbered tiles to reach the '2048' tile!</p>
+  </header>
+  <main>
+    <div id="game-filed"></div>
+    <div id="popup-container">
+      <div id="popup">
+        <p id="popup-message"></p>
+        <p>Start again?</p>
+        <button id="start-again-btn">Start Again</button>
+        <button id="cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <ul>
+      <li>author: Daniel Pribula</li>
+      <li>email: daniel.pribula@gmail.com</li>
+    </ul>
+  </footer>
+  <script src="assets/js/script.js"></script>
 </body>
 </html>
