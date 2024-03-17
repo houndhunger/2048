@@ -249,3 +249,53 @@ function checkLost() {
         return false;
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the element you want to add touch gestures to
+    var element = document.getElementById('game-filed');
+
+    var startX, startY, endX, endY;
+
+    // Touch start event
+    element.addEventListener('touchstart', function(event) {
+        startX = event.touches[0].clientX;
+        startY = event.touches[0].clientY;
+    });
+
+    // Touch move event
+    element.addEventListener('touchmove', function(event) {
+        endX = event.touches[0].clientX;
+        endY = event.touches[0].clientY;
+    });
+
+    // Touch end event
+    element.addEventListener('touchend', function(event) {
+        var diffX = endX - startX;
+        var diffY = endY - startY;
+
+        // Determine the direction of the swipe
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            // Horizontal swipe
+            if (diffX > 0) {
+                // Swipe right
+                // Your code here for swipe right
+                document.getElementById('descritption').innerHTML = 'Swipe right';
+            } else {
+                // Swipe left
+                // Your code here for swipe left
+                document.getElementById('descritption').innerHTML = 'Swipe left';
+            }
+        } else {
+            // Vertical swipe
+            if (diffY > 0) {
+                // Swipe down
+                // Your code here for swipe down
+                document.getElementById('descritption').innerHTML = 'Swipe down';
+            } else {
+                // Swipe up
+                // Your code here for swipe up
+                document.getElementById('descritption').innerHTML = 'Swipe up';
+            }
+        }
+    });
+});
