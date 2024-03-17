@@ -48,10 +48,10 @@ function styleNumber(square, style) {
         
     square.style.backgroundColor = colorMap[style] || '';
     if (style === '0') {
-        square.style.color = '#555'; //'#bbb'
+        square.style.color = '#bbb';
     }
     else
-        square.style.color = '#000';
+        square.style.color = '#333';
 }
 
 // game controls - read arrow keys
