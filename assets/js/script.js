@@ -167,9 +167,9 @@ function mergeLeft() {
 }
 
 function mergeRight() {
-    for (let i = width - 1; i >= 1; i--) {
+    for (let i = width - 1; i >= 0; i--) {
         let shift = 0;
-        for (let j = width - 1; j >= 0; j--) {
+        for (let j = width - 1; j >= 1; j--) {
             let ind = i * width + j;
             if (squares[ind].innerHTML === squares[ind - 1].innerHTML) {
                 squares[ind].innerHTML *= 2;
