@@ -39,7 +39,7 @@ header {
 }
 
 #best-score,
-#score {
+#score, #new-game {
   display: inline-block;
   width: 100px;
   margin: 10px 10px 0 0;
@@ -51,8 +51,14 @@ header {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
+#new-game {
+  width: 215px;
+  align-self: first baseline;
+  display: block;
+}
+
 #best-score h2,
-#score h2 {
+#score h2, #new-game h2  {
   text-transform: uppercase;
 }
 
@@ -191,11 +197,6 @@ footer ul li {
   header {
     width: 487px;
   }
-
-  /*
-  #best-score, #score {
-    margin: 10px 0 0 10px;
-  }*/
 
   /* Game styles */
   #game-filed {

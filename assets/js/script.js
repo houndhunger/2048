@@ -62,29 +62,34 @@ function handleKeyDown(event) {
             slideUp();
             mergeUp();
             slideUp();
-            (checkWin() || checkLost()) ? document.removeEventListener('keydown', handleKeyDown) : genNewNumber();
+            (checkWin() || checkLost()) ? removeEventListeners() : genNewNumber();
             break;
         case 'ArrowDown':
             slideDown();
             mergeDown();
             slideDown();
-            (checkWin() || checkLost()) ? document.removeEventListener('keydown', handleKeyDown) : genNewNumber();
+            (checkWin() || checkLost()) ? removeEventListeners() : genNewNumber();
             break;
         case 'ArrowLeft':
             slideLeft();
             mergeLeft();
             slideLeft();
-            (checkWin() || checkLost()) ? document.removeEventListener('keydown', handleKeyDown) : genNewNumber();
+            (checkWin() || checkLost()) ? removeEventListeners() : genNewNumber();
             break;
         case 'ArrowRight':
             slideRight();
             mergeRight();
             slideRight();
-            (checkWin() || checkLost()) ? document.removeEventListener('keydown', handleKeyDown) : genNewNumber();
+            (checkWin() || checkLost()) ? removeEventListeners() : genNewNumber();
             break;
         default:
             break;
     }
+}
+
+function removeEventListeners() {
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('touchend', handleTouchEnd);
 }
 
 // Add the event listener
@@ -223,7 +228,7 @@ function checkWin() {
         document.getElementById('popup-message').innerHTML = 'You Won! :)';
         document.getElementById("popup-container").style.display = "flex";
         document.getElementById("start-again-btn").addEventListener("click", function() {
-            location.reload();
+            newGame();
             });
             document.getElementById("cancel-btn").addEventListener("click", function() {
             document.getElementById("popup-container").style.display = "none";
@@ -239,7 +244,7 @@ function checkLost() {
         document.getElementById('popup-message').innerHTML = 'You Lost :(';
         document.getElementById("popup-container").style.display = "flex";
         document.getElementById("start-again-btn").addEventListener("click", function() {
-            location.reload();
+            newGame();
           });
           document.getElementById("cancel-btn").addEventListener("click", function() {
             document.getElementById("popup-container").style.display = "none";
@@ -250,50 +255,43 @@ function checkLost() {
     }
 }
 
-    // Get the element you want to add touch gestures to
-    //var element = document.getElementById('main-id');
 
-    var startX, startY, endX, endY;
+var startX, startY, endX, endY;
 
-    // Touch start event
-    document.addEventListener('touchstart', function(event) {
-        startX = event.touches[0].clientX;
-        startY = event.touches[0].clientY;
-    });
+document.addEventListener('touchstart', function(event) {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+});
 
-    // Touch move event
-    document.addEventListener('touchmove', function(event) {
-        endX = event.touches[0].clientX;
-        endY = event.touches[0].clientY;
-    });
+document.addEventListener('touchmove', function(event) {
+    endX = event.touches[0].clientX;
+    endY = event.touches[0].clientY;
+});
 
-    // Touch end event
-    document.addEventListener('touchend', function(event) {
-        var diffX = endX - startX;
-        var diffY = endY - startY;
+// Define the touchend event handler function
+function handleTouchEnd(event) {
+    var diffX = endX - startX;
+    var diffY = endY - startY;
 
-        // Determine the direction of the swipe
-        if (Math.abs(diffX) > Math.abs(diffY)) {
-            // Horizontal swipe
-            if (diffX > 0) {
-                // Swipe right
-                // Your code here for swipe right
-                document.getElementById('description').innerHTML = 'Swipe right';
-            } else {
-                // Swipe left
-                // Your code here for swipe left
-                document.getElementById('description').innerHTML = 'Swipe left';
-            }
+    // Determine the direction of the swipe
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 0) {
+            handleKeyDown({ key: 'ArrowRight'});
         } else {
-            // Vertical swipe
-            if (diffY > 0) {
-                // Swipe down
-                // Your code here for swipe down
-                document.getElementById('description').innerHTML = 'Swipe down';
-            } else {
-                // Swipe up
-                // Your code here for swipe up
-                document.getElementById('description').innerHTML = 'Swipe up';
-            }
+            handleKeyDown({ key: 'ArrowLeft'});
         }
-    });
+    } else {
+        if (diffY > 0) {
+            handleKeyDown({ key: 'ArrowDown' });
+        } else {
+            handleKeyDown({ key: 'ArrowUp' });
+        }
+    }
+}
+
+// Add the touchend event listener
+document.addEventListener('touchend', handleTouchEnd);
+
+function newGame() {
+    location.reload();
+}
