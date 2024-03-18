@@ -136,7 +136,6 @@ function slideLeft() {
                 styleNumber(squares[ind], squares[ind].innerHTML);
             }
         }
-        console.log(slideCheck);
     }
     return slideCheck;
 }
@@ -156,7 +155,6 @@ function slideRight() {
                 styleNumber(squares[ind], squares[ind].innerHTML);
             }
         }
-        console.log(slideCheck);
     }
     return slideCheck;
 }
@@ -177,7 +175,6 @@ function slideUp() {
                 slideCheck++;
             }
         }
-        console.log(slideCheck);
     }
     return slideCheck;
 }
@@ -198,7 +195,6 @@ function slideDown() {
                 slideCheck++;
             }
         }
-        console.log(slideCheck);
     }
     return slideCheck;
 }
@@ -346,15 +342,18 @@ function handleTouchEnd(event) {
 
     // Determine the direction of the swipe
     if (Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX > 0) {
+        if (diffX > 10) {
             handleKeyDown({ key: 'ArrowRight'});
-        } else {
+        } else if (diffX < -10) {
             handleKeyDown({ key: 'ArrowLeft'});
         }
     } else {
         if (diffY > 0) {
+            event.preventDefault();
+        }
+        if (diffY > 10) {
             handleKeyDown({ key: 'ArrowDown' });
-        } else {
+        } else if (diffY < -10) {
             handleKeyDown({ key: 'ArrowUp' });
         }
     }
