@@ -85,34 +85,35 @@ function styleNumber(square, style) {
 // game controls - read arrow keys
 // Define the event listener function
 function handleKeyDown(event) {
+    let mergeCheck = false;
+    let slideCheck1 = false;
+    let slideCheck2 = false;
     switch (event.key) {
         case 'ArrowUp':
-            slideUp();
-            mergeUp();
-            slideUp();
-            (checkWin() || checkLost()) ? removeEventListeners() : genNewNumber();
+            slideCheck1 = slideUp();
+            mergeCheck = mergeUp();
+            lideCheck2 = slideUp();
             break;
         case 'ArrowDown':
-            slideDown();
-            mergeDown();
-            slideDown();
-            (checkWin() || checkLost()) ? removeEventListeners() : genNewNumber();
+            slideCheck1 = slideDown();
+            mergeCheck = mergeDown();
+            slideCheck2 = slideDown();
             break;
         case 'ArrowLeft':
-            slideLeft();
-            mergeLeft();
-            slideLeft();
-            (checkWin() || checkLost()) ? removeEventListeners() : genNewNumber();
+            slideCheck1 = slideLeft();
+            mergeCheck = mergeLeft();
+            slideCheck2 = slideLeft();
             break;
         case 'ArrowRight':
-            slideRight();
-            mergeRight();
-            slideRight();
-            (checkWin() || checkLost()) ? removeEventListeners() : genNewNumber();
+            slideCheck1 = slideRight();
+            mergeCheck = mergeRight();
+            slideCheck2 = slideRight();
             break;
         default:
             break;
     }
+    //console.log(mergeCheck);
+    (checkWin() || checkLost()) ? removeEventListeners() : (mergeCheck || slideCheck1 || slideCheck2 ? genNewNumber() : undefined);
 }
 
 function removeEventListeners() {
@@ -121,10 +122,12 @@ function removeEventListeners() {
 }
 
 function slideLeft() {
+    let slideCheck = false;
     for (let i = 0; i < width; i++) {
         let shift = 0;
         for (let j = 0; j < width; j++) {
             let ind = i * width + j;
+            squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
             squares[ind - shift].innerHTML = squares[ind].innerHTML;
             styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
             if (squares[ind].innerHTML === '0') shift++;
@@ -133,14 +136,18 @@ function slideLeft() {
                 styleNumber(squares[ind], squares[ind].innerHTML);
             }
         }
+        console.log(slideCheck);
     }
+    return slideCheck;
 }
 
 function slideRight() {
+    let slideCheck = false;
     for (let i = width - 1; i >= 0; i--) {
         let shift = 0;
         for (let j = width - 1; j >= 0; j--) {
             let ind = i * width + j;
+            squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
             squares[ind + shift].innerHTML = squares[ind].innerHTML;
             styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
             if (squares[ind].innerHTML === '0') shift++;
@@ -149,107 +156,131 @@ function slideRight() {
                 styleNumber(squares[ind], squares[ind].innerHTML);
             }
         }
+        console.log(slideCheck);
     }
+    return slideCheck;
 }
 
 function slideUp() {
+    let slideCheck = false;
     for (let i = 0; i < width; i++) {
         let shift = 0;
         for (let j = 0; j < width; j++) {
             let ind = j * width + i;
+            squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
             squares[ind - shift].innerHTML = squares[ind].innerHTML; 
             styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
             if (squares[ind].innerHTML === '0') shift = shift + width;
             else if (shift > 0 && squares[ind].innerHTML != 0) {
                 squares[ind].innerHTML = '0';
                 styleNumber(squares[ind], squares[ind].innerHTML);
+                slideCheck++;
             }
         }
+        console.log(slideCheck);
     }
+    return slideCheck;
 }
 
 function slideDown() {
+    let slideCheck = false;
     for (let i = width - 1; i >= 0; i--) {
         let shift = 0;
         for (let j = width - 1; j >= 0; j--) {
             let ind = j * width + i;
+            squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
             squares[ind + shift].innerHTML = squares[ind].innerHTML; 
             styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
             if (squares[ind].innerHTML === '0') shift = shift + width;
             else if (shift > 0 && squares[ind].innerHTML != 0) {
                 squares[ind].innerHTML = '0';
                 styleNumber(squares[ind], squares[ind].innerHTML);
+                slideCheck++;
             }
         }
+        console.log(slideCheck);
     }
+    return slideCheck;
 }
 
 function mergeLeft() {
+    let mergeCheck = 0;
     for (let i = 0; i <= width - 1; i++) {
         let shift = 0;
         for (let j = 0; j <= width - 2; j++) {
             let ind = i * width + j;
-            if (squares[ind].innerHTML === squares[ind + 1].innerHTML) {
+            if (squares[ind].innerHTML === squares[ind + 1].innerHTML && squares[ind].innerHTML !== '0') {
                 squares[ind].innerHTML *= 2;
                 addScore(squares[ind].innerHTML);
                 styleNumber(squares[ind], squares[ind].innerHTML);
                 squares[ind + 1].innerHTML = '0';
                 styleNumber(squares[ind + 1], squares[ind + 1].innerHTML);
                 j++;
+                mergeCheck++;
             }
         }
     }
+    return mergeCheck;
 }
 
 function mergeRight() {
+    let mergeCheck = 0;
     for (let i = width - 1; i >= 0; i--) {
         let shift = 0;
         for (let j = width - 1; j >= 1; j--) {
             let ind = i * width + j;
-            if (squares[ind].innerHTML === squares[ind - 1].innerHTML) {
+            if (squares[ind].innerHTML === squares[ind - 1].innerHTML && squares[ind].innerHTML !== '0') {
                 squares[ind].innerHTML *= 2;
                 addScore(squares[ind].innerHTML);
                 styleNumber(squares[ind], squares[ind].innerHTML);
                 squares[ind - 1].innerHTML = '0';
                 styleNumber(squares[ind - 1], squares[ind - 1].innerHTML);
                 j--;
+                mergeCheck++;
             }
         }
     }
+    return mergeCheck;
 }
 
 function mergeUp() {
+    let mergeCheck = 0;
     for (let i = 0; i <= width - 1; i++) {
         let shift = 0;
         for (let j = 0; j <= width - 2; j++) {
             let ind = j * width + i;
-            if (squares[ind].innerHTML === squares[ind + width].innerHTML) {
+            if (squares[ind].innerHTML === squares[ind + width].innerHTML && squares[ind].innerHTML !== '0') {
                 squares[ind].innerHTML *= 2;
                 addScore(squares[ind].innerHTML);
                 styleNumber(squares[ind], squares[ind].innerHTML);
                 squares[ind + width].innerHTML = '0';
                 styleNumber(squares[ind + width], squares[ind + width].innerHTML);
                 j++;
+                mergeCheck++;
             }
         }
     }
+    return mergeCheck;
 }
 
 function mergeDown() {
+    let mergeCheck = 0;
     for (let i = width - 1; i >= 0; i--) {
         let shift = 0;
         for (let j = width - 1; j >= 1; j--) {
             let ind = j * width + i;
-            if (squares[ind].innerHTML === squares[ind - width].innerHTML) {
+            if (squares[ind].innerHTML === squares[ind - width].innerHTML && squares[ind].innerHTML !== '0') {
                 squares[ind].innerHTML *= 2;
                 addScore(squares[ind].innerHTML);
                 styleNumber(squares[ind], squares[ind].innerHTML);
                 squares[ind - width].innerHTML = '0';
                 styleNumber(squares[ind - width], squares[ind - width].innerHTML);
                 j--;
+                mergeCheck++;
             }
         }
     }
+    return mergeCheck;
 }
 
 function checkWin() {
