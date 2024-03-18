@@ -328,15 +328,18 @@ function newBestScore() {
 document.addEventListener('touchstart', function(event) {
     startX = event.touches[0].clientX;
     startY = event.touches[0].clientY;
+    event.preventDefault();
 });
 
 document.addEventListener('touchmove', function(event) {
     endX = event.touches[0].clientX;
     endY = event.touches[0].clientY;
+    event.preventDefault();
 });
 
 // Define the touchend event handler function
 function handleTouchEnd(event) {
+    event.preventDefault();
     var diffX = endX - startX;
     var diffY = endY - startY;
 
