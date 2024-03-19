@@ -18,6 +18,11 @@ body {
   min-height: 100vh;
 }
 
+html,
+body {
+    overscroll-behavior-y: contain;
+}
+
 header {
   padding: 0 15px;
   width: 100%;
