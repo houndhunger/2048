@@ -92,22 +92,26 @@ function handleKeyDown(event) {
     switch (event.key) {
         case 'ArrowUp':
             slideCheck1 = slideUp();
-            mergeCheck = mergeUp();
+            //mergeCheck = mergeUp();
+            mergeCheck = merge("mergeUp");
             lideCheck2 = slideUp();
             break;
         case 'ArrowDown':
             slideCheck1 = slideDown();
-            mergeCheck = mergeDown();
+            //mergeCheck = mergeDown();
+            mergeCheck = merge("mergeDown");
             slideCheck2 = slideDown();
             break;
         case 'ArrowLeft':
             slideCheck1 = slideLeft();
-            mergeCheck = mergeLeft();
+            //mergeCheck = mergeLeft();
+            mergeCheck = merge("mergeLeft");
             slideCheck2 = slideLeft();
             break;
         case 'ArrowRight':
             slideCheck1 = slideRight();
-            mergeCheck = mergeRight();
+            //mergeCheck = mergeRight();
+            mergeCheck = merge("mergeRight");
             slideCheck2 = slideRight();
             break;
         default:
@@ -121,6 +125,8 @@ function removeEventListeners() {
     document.removeEventListener('keydown', handleKeyDown);
     document.removeEventListener('touchend', handleTouchEnd);
 }
+
+/* Slide functions */
 
 function slideLeft() {
     let slideCheck = false;
@@ -200,86 +206,48 @@ function slideDown() {
     return slideCheck;
 }
 
-function mergeLeft() {
+/* Merge function */
+function merge(way) {
     let mergeCheck = 0;
-    for (let i = 0; i <= width - 1; i++) {
-        let shift = 0;
-        for (let j = 0; j <= width - 2; j++) {
-            let ind = i * width + j;
-            if (squares[ind].innerHTML === squares[ind + 1].innerHTML && squares[ind].innerHTML !== '0') {
-                squares[ind].innerHTML *= 2;
-                addScore(squares[ind].innerHTML);
-                styleNumber(squares[ind], squares[ind].innerHTML);
-                squares[ind + 1].innerHTML = '0';
-                styleNumber(squares[ind + 1], squares[ind + 1].innerHTML);
-                j++;
-                mergeCheck++;
+    if (way == "mergeRight" || way == "mergeDown") {
+        let indShift = way == "mergeRight" ? -1 : -width;
+        for (let i = width - 1; i >= 0; i--) {
+            let shift = 0;
+            for (let j = width - 1; j >= 1; j--) {
+                let ind = way == "mergeRight" ? i * width + j : j * width + i;
+                if (squares[ind].innerHTML === squares[ind + indShift].innerHTML && squares[ind].innerHTML !== '0') {
+                    mergeOps(ind, indShift);
+                    j--;
+                    mergeCheck++;
+                }
+            }
+        }
+    } else if (way == "mergeLeft" || way == "mergeUp") {
+        let indShift = way == "mergeLeft" ? 1 : width;
+        for (let i = 0; i <= width - 1; i++) {
+            let shift = 0;
+            for (let j = 0; j <= width - 2; j++) {
+                let ind = way == "mergeLeft" ? i * width + j : j * width + i;
+                if (squares[ind].innerHTML === squares[ind + indShift].innerHTML && squares[ind].innerHTML !== '0') {
+                    mergeOps(ind, indShift);
+                    j++;
+                    mergeCheck++;
+                }
             }
         }
     }
-    return mergeCheck;
+        return mergeCheck;
 }
 
-function mergeRight() {
-    let mergeCheck = 0;
-    for (let i = width - 1; i >= 0; i--) {
-        let shift = 0;
-        for (let j = width - 1; j >= 1; j--) {
-            let ind = i * width + j;
-            if (squares[ind].innerHTML === squares[ind - 1].innerHTML && squares[ind].innerHTML !== '0') {
-                squares[ind].innerHTML *= 2;
-                addScore(squares[ind].innerHTML);
-                styleNumber(squares[ind], squares[ind].innerHTML);
-                squares[ind - 1].innerHTML = '0';
-                styleNumber(squares[ind - 1], squares[ind - 1].innerHTML);
-                j--;
-                mergeCheck++;
-            }
-        }
-    }
-    return mergeCheck;
+function mergeOps(ind, indShift) {
+    squares[ind].innerHTML *= 2;
+    addScore(squares[ind].innerHTML);
+    styleNumber(squares[ind], squares[ind].innerHTML);
+    squares[ind + indShift].innerHTML = '0';
+    styleNumber(squares[ind + indShift], squares[ind + indShift].innerHTML);
 }
 
-function mergeUp() {
-    let mergeCheck = 0;
-    for (let i = 0; i <= width - 1; i++) {
-        let shift = 0;
-        for (let j = 0; j <= width - 2; j++) {
-            let ind = j * width + i;
-            if (squares[ind].innerHTML === squares[ind + width].innerHTML && squares[ind].innerHTML !== '0') {
-                squares[ind].innerHTML *= 2;
-                addScore(squares[ind].innerHTML);
-                styleNumber(squares[ind], squares[ind].innerHTML);
-                squares[ind + width].innerHTML = '0';
-                styleNumber(squares[ind + width], squares[ind + width].innerHTML);
-                j++;
-                mergeCheck++;
-            }
-        }
-    }
-    return mergeCheck;
-}
-
-function mergeDown() {
-    let mergeCheck = 0;
-    for (let i = width - 1; i >= 0; i--) {
-        let shift = 0;
-        for (let j = width - 1; j >= 1; j--) {
-            let ind = j * width + i;
-            if (squares[ind].innerHTML === squares[ind - width].innerHTML && squares[ind].innerHTML !== '0') {
-                squares[ind].innerHTML *= 2;
-                addScore(squares[ind].innerHTML);
-                styleNumber(squares[ind], squares[ind].innerHTML);
-                squares[ind - width].innerHTML = '0';
-                styleNumber(squares[ind - width], squares[ind - width].innerHTML);
-                j--;
-                mergeCheck++;
-            }
-        }
-    }
-    return mergeCheck;
-}
-
+/* check Win & Lost functions */
 function checkWin() {
     if (squares.some(square => square.innerHTML === '2048')) {
         let potentialBest = newBestScore();
@@ -295,7 +263,6 @@ function checkWin() {
     } 
     return false;
 }
-
 
 function checkLost() {
     if (!squares.some(square => square.innerHTML === '0')) {
@@ -314,6 +281,7 @@ function checkLost() {
     }
 }
 
+/* Score function */
 function newBestScore() {
     let bestScr = localStorage.getItem('localBestScore');
     if (score.innerHTML > bestScr) {
@@ -325,6 +293,7 @@ function newBestScore() {
         return '';
     }    
 }
+
 
 document.addEventListener('touchstart', function(event) {
     startX = event.touches[0].clientX;

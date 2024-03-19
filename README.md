@@ -76,9 +76,10 @@ The 2048 game can be deployed as a standalone web application or hosted on a web
 ## Credits
 - The original 2048 game was created by Gabriele Cirulli. Our project is inspired by his innovative game concept.
 - Game is already on github as basic concept. https://github.com/kubowania/2048/
+- Game algorithm https://www.baeldung.com/cs/2048-algorithm
 I went through quckly the structure of the code to give me a hint and kickstart. Since first function, I aranged the code myself.
 - Some inspiration also working game here: https://2048game.com/
-- Some online tutorials, resources, and community forums provided valuable insights and assistance during the development process, but mostly assitance from ChatGPT. 
+- Some online tutorials (https://css-tricks.com/snippets/css/a-guide-to-flexbox/), resources, and community forums provided valuable insights and assistance during the development process, but mostly assitance from ChatGPT. 
 
 ## License
 This project is open-source and available under the MIT License. Feel free to fork, modify, and distribute the code for educational or commercial purposes.
