@@ -46,12 +46,13 @@ function eraseGameBoard() {
 
 // genareate new number
 function genNewNumber() {
-    //check gsme over, if not continue
+    let randomPosition
     do {
-        randomNumber = Math.floor(Math.random() * (width * width))
-    } while (squares[randomNumber].innerHTML != 0);
-    squares[randomNumber].innerHTML = '2';
-    styleNumber(squares[randomNumber], '2');
+        randomPosition = Math.floor(Math.random() * (width * width))
+    } while (squares[randomPosition].innerHTML != 0);
+    const randomNumber = Math.random() < 0.9 ? 2 : 4;
+    squares[randomPosition].innerHTML = randomNumber;
+    styleNumber(squares[randomPosition], randomNumber);
 }
 
 function addScore(add) {
