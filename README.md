@@ -18,9 +18,8 @@ The 2048 game project is a web-based application designed to entertain users whi
 - **Responsive Design:** The game is designed to be playable across various devices, including desktops, laptops, tablets, and smartphones.
 - **Scoring System:** A scoring system tracks and displays the player's current score as they merge tiles.
 - **High Score:** The game keeps track of the player's highest score achieved during the session.
-- **Tile Animation:** Smooth animations enhance the gaming experience by providing visual feedback when tiles merge.
+- **Controls** By keybord arrow keys and swipe or mosue
 - **Reset Functionality:** Players can start a new game at any time to reset the board and their score.
-- **Sound Effects:** Optional sound effects add an immersive element to the gameplay experience.
 
 ## Structure
 The game interface consists of the following elements:
@@ -44,26 +43,42 @@ The game interface consists of the following elements:
 
 ## Future Enhancements
 - **Scoreboard:** Displays the player's current score and highest score achieved.
-- **Pause Game Button:** Allows players to safely pause game at any time ond come back later.
-- **Sounds** Option to enable or disable sound effects during gameplay.
+- **Pause Game** Allows players to safely pause game at any time and come back later.
 - **Undo Functionality:** Allow players to undo their last move for added flexibility up to 3 times.
 - **Customizable Themes:** Provide options for players to choose different color themes for the game interface.
 - **Multiplayer Mode:** Implement a multiplayer mode where players can compete against each other online
 - **Accessibility Features:** Enhance accessibility by adding support for screen readers and keyboard navigation.
+- **Tile Animation:** Smooth animations enhance the gaming experience by providing visual feedback when tiles merge.
+- **Sound Effects:** Optional sound effects add an immersive element to the gameplay experience.
 - **Advanced Strategies:** Integrate AI algorithms to provide hints or strategies for optimal gameplay.
+
+## Solved Bugs
+- In conditioms, like if(squares[ind].innerHTML === '0'), string is used, instead not mixing it with integer (squares[ind].innerHTML == 0).
+- Modal replaced Promt For Game won or Game lost message being delivered.
+- Prevent algorithm running outside of array range - game filed when looping thorugh it.
+- Prevent generating new number when nothing moved or merged.
+- Prevent swipe down and refresh game on touch devices.
+
+## Unsolved Bugs
+- Game minimal height limit - Game starts vertical scrolling on less then 770px. Also game fild is fully vissible on screen shoving more then 460px vertically.
 
 ## Technologies Used
 - **HTML:** Used for the structure and layout of the game interface.
 - **CSS:** Used for styling and visual design of the game elements.
 - **JavaScript:** Used for implementing the game logic, user interactions, and dynamic behavior.
 - **Responsive Design:** Utilized CSS media queries and flexible layouts to ensure compatibility across devices.
+- **ChatGPT** Used to help to find css solutions, find javascript code mistakes, gnenaerate bits of javascirpt or css, improving javascript code, generating structure for this readme etc.
+- **Excel:** Used to geneare colorMap with smooth colour tranzition to next number.
 
 ## Deployment
 The 2048 game can be deployed as a standalone web application or hosted on a web server for online access. It can be easily integrated into existing websites or platforms for users to enjoy.
 
 ## Credits
 - The original 2048 game was created by Gabriele Cirulli. Our project is inspired by his innovative game concept.
-- Various online tutorials, resources, and community forums provided valuable insights and assistance during the development process.
+- Game is already on github as basic concept. https://github.com/kubowania/2048/
+I went through quckly the structure of the code to give me a hint and kickstart. Since first function, I aranged the code myself.
+- Some inspiration also working game here: https://2048game.com/
+- Some online tutorials, resources, and community forums provided valuable insights and assistance during the development process, but mostly assitance from ChatGPT. 
 
 ## License
 This project is open-source and available under the MIT License. Feel free to fork, modify, and distribute the code for educational or commercial purposes.
