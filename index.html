@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="keywords" content="2048, game, slide, swipe, tiles, logical, strategy">
-  <meta name="description" content="Join the numbers and get to the 2048 tile! Play the addictive 2048 game, where you combine tiles to reach the elusive 2048 tile. Challenge yourself and see if you can beat your highest score. Enjoy hours of fun with this classic puzzle game.">
+  <meta name="description"
+    content="Join the numbers and get to the 2048 tile! Play the addictive 2048 game, where you combine tiles to reach the elusive 2048 tile. Challenge yourself and see if you can beat your highest score. Enjoy hours of fun with this classic puzzle game.">
   <meta name="author" content="Daniel Pribula">
   <meta name="robots" content="index, follow">
   <link rel="stylesheet" href="assets/css/style.css">
@@ -15,43 +16,61 @@
 <body>
   <header>
     <div id="title">
-      <h1 id="main-title">2048</h1>
-      <h2 id="sub-title">game</h2>
+        <h1 id="main-title"><a href="index.html">2048</a></h1>
+        <h2 id="sub-title"><a href="index.html">game</a></h2>
     </div>
     <div id="score-board">
-      <div id="best-score">
-        <h2  id="best-score-title">best</h2>
+      <div id="best-score" class="nav-display">
+        <h2 id="best-score-title">best</h2>
         <div id="best-score-value">0</div>
       </div>
-      <div id="score">
+      <div id="score" class="nav-display">
         <h2 id="score-title">score</h2>
         <div id="score-value">0</div>
       </div>
     </div>
     <div id="instructions">
-      <div id="new-game">
+      <div id="pause" class="nav-button">
+        <h2 id="pause-title" onclick="pauseGame()">Pause</h2>
+      </div>
+      <div id="new-game" class="nav-button">
         <h2 id="new-game-title" onclick="newGame()">new game</h2>
       </div>
       <input type="checkbox" id="instructions-toggle">
-      <label for="instructions-toggle"><h2  id="instructions-toggle-title">instructions</h2></label>
+      <label for="instructions-toggle" class="nav-button">
+        <h2 id="instructions-toggle-title">instructions</h2>
+      </label>
       <ol id="instructions-text">
-        <li><strong>Objective:</strong> The goal of the game is to combine numbered tiles on a grid to create a tile with the number 2048.</li>
-        <li><strong>Starting Grid:</strong> The game begins with a 4x4 grid populated with two tiles, each with a value of either 2 or 4.</li>
-        <li><strong>Tile Movement:</strong> You can move tiles in four directions: up, down, left, and right. You do this by swiping on a touchscreen device or using the arrow keys on a keyboard.</li>
-        <li><strong>Tile Combining:</strong> When you move tiles in a certain direction, they all slide as far as possible in that direction until they hit the edge of the grid or another tile. If two tiles with the same number collide, they merge into a single tile with the sum of their values.</li>
-        <li><strong>New Tile Generation:</strong> After each move, a new tile appears in an empty spot on the grid. The value of the new tile is randomly selected to be either 2 or 4.</li>
-        <li><strong>Game Over:</strong> The game ends when there are no more empty spaces on the grid and no more possible moves to make. This occurs when the grid is completely filled with tiles and no adjacent tiles have the same value.</li>
-        <li><strong>Scoring:</strong> Your score increases with each merge you make. The value of the merged tile is added to your score. The ultimate goal is to achieve the highest score possible before the game ends.</li>
-        <li><strong>Strategy:</strong> To succeed in 2048, you need to plan your moves carefully and think ahead. Try to create larger tiles by merging smaller ones and keep the grid as open as possible to make room for new tiles.</li>
-        <li><strong>Persistence:</strong> 2048 requires patience and persistence. Don't get discouraged if you don't reach 2048 on your first try. Keep practicing and refining your strategy to improve your chances of success.</li>
+        <li><strong>Objective:</strong> The goal of the game is to combine numbered tiles on a grid to create a tile
+          with the number 2048.</li>
+        <li><strong>Starting Grid:</strong> The game begins with a 4x4 grid populated with two tiles, each with a value
+          of either 2 or 4.</li>
+        <li><strong>Tile Movement:</strong> You can move tiles in four directions: up, down, left, and right. You do
+          this by swiping on a touchscreen device or using the arrow keys on a keyboard.</li>
+        <li><strong>Tile Combining:</strong> When you move tiles in a certain direction, they all slide as far as
+          possible in that direction until they hit the edge of the grid or another tile. If two tiles with the same
+          number collide, they merge into a single tile with the sum of their values.</li>
+        <li><strong>New Tile Generation:</strong> After each move, a new tile appears in an empty spot on the grid. The
+          value of the new tile is randomly selected to be either 2 or 4.</li>
+        <li><strong>Game Over:</strong> The game ends when there are no more empty spaces on the grid and no more
+          possible moves to make. This occurs when the grid is completely filled with tiles and no adjacent tiles have
+          the same value.</li>
+        <li><strong>Scoring:</strong> Your score increases with each merge you make. The value of the merged tile is
+          added to your score. The ultimate goal is to achieve the highest score possible before the game ends.</li>
+        <li><strong>Strategy:</strong> To succeed in 2048, you need to plan your moves carefully and think ahead. Try to
+          create larger tiles by merging smaller ones and keep the grid as open as possible to make room for new tiles.
+        </li>
+        <li><strong>Persistence:</strong> 2048 requires patience and persistence. Don't get discouraged if you don't
+          reach 2048 on your first try. Keep practicing and refining your strategy to improve your chances of success.
+        </li>
       </ol>
-  </div>
-  <p id="description">Join numbered tiles to reach the '2048' tile!</p>
-    
-  
- </header>
+    </div>
+    <p id="description">Join numbered tiles to reach the '2048' tile!</p>
 
-  <main  id="main-id">
+
+  </header>
+
+  <main id="main-id">
     <div id="game-filed"></div>
     <div id="popup-container">
       <div id="popup">
@@ -72,4 +91,5 @@
 
   <script src="assets/js/script.js"></script>
 </body>
+
 </html>
