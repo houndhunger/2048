@@ -329,7 +329,7 @@ function newBestScore() {
 document.addEventListener('touchstart', function(event) {
     startX = event.touches[0].clientX;
     startY = event.touches[0].clientY;
-    event.preventDefault();
+    //event.preventDefault();
 });
 
 document.addEventListener('touchmove', function(event) {
@@ -340,7 +340,7 @@ document.addEventListener('touchmove', function(event) {
 
 // Define the touchend event handler function
 function handleTouchEnd(event) {
-    event.preventDefault();
+    //event.preventDefault();
     var diffX = endX - startX;
     var diffY = endY - startY;
 
@@ -352,9 +352,9 @@ function handleTouchEnd(event) {
             handleKeyDown({ key: 'ArrowLeft'});
         }
     } else {
-        if (diffY > 0) {
+        /*if (diffY > 0) {
             event.preventDefault();
-        }
+        }*/
         if (diffY > 10) {
             handleKeyDown({ key: 'ArrowDown' });
         } else if (diffY < -10) {
