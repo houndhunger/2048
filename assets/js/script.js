@@ -78,9 +78,9 @@ function setNewGame() {
 function drawGameBoard() {
     for (let i = 0; i < FIELD_WIDTH * FIELD_WIDTH; i++) {
         let square = document.createElement('div');
-        square.innerHTML = '0';
+        square.innerHTML = '';
         GAME_FIELD.appendChild(square);
-        styleNumber(square, '0');
+        styleNumber(square, '');
         squares.push(square);
     }
     genNewNumber();
@@ -89,7 +89,7 @@ function drawGameBoard() {
 
 function eraseGameBoard() {
         GAME_FIELD.innerHTML = '';
-        GAME_SCORE.innerHTML = '0';
+        GAME_SCORE.innerHTML = '';
     }
 
 function genNewNumber() {
@@ -110,7 +110,7 @@ function addScore(add) {
 // game controls - read arrow keys
 // Define the event listener function
 function handleKeyDown(event) {
-    //square.innerHTML === '' ? square.innerHTML = '0' : undefined;
+    
     let mergeCheck = false;
     let slideCheck1 = false;
     let slideCheck2 = false;
@@ -128,6 +128,10 @@ function handleKeyDown(event) {
 
     // Hide instructions
     document.getElementById("instructions-toggle").checked = false; 
+/*
+    squares.forEach(square => {
+        square.innerHTML === '' ? square.innerHTML = '0' : undefined;
+    });*/
 
     switch (event.key) {
         case 'ArrowUp':
@@ -171,9 +175,9 @@ function slideLeft() {
             squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
             squares[ind - shift].innerHTML = squares[ind].innerHTML;
             styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
-            if (squares[ind].innerHTML === '0') shift++;
+            if (squares[ind].innerHTML === '') shift++;
             else if (shift > 0 && squares[ind].innerHTML != 0) {
-                squares[ind].innerHTML = '0';
+                squares[ind].innerHTML = '';
                 styleNumber(squares[ind], squares[ind].innerHTML);
             }
         }
@@ -190,9 +194,9 @@ function slideRight() {
             squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
             squares[ind + shift].innerHTML = squares[ind].innerHTML;
             styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
-            if (squares[ind].innerHTML === '0') shift++;
+            if (squares[ind].innerHTML === '') shift++;
             else if (shift > 0 && squares[ind].innerHTML != 0) {
-                squares[ind].innerHTML = '0';
+                squares[ind].innerHTML = '';
                 styleNumber(squares[ind], squares[ind].innerHTML);
             }
         }
@@ -209,9 +213,9 @@ function slideUp() {
             squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
             squares[ind - shift].innerHTML = squares[ind].innerHTML; 
             styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
-            if (squares[ind].innerHTML === '0') shift = shift + FIELD_WIDTH;
+            if (squares[ind].innerHTML === '') shift = shift + FIELD_WIDTH;
             else if (shift > 0 && squares[ind].innerHTML != 0) {
-                squares[ind].innerHTML = '0';
+                squares[ind].innerHTML = '';
                 styleNumber(squares[ind], squares[ind].innerHTML);
                 slideCheck++;
             }
@@ -229,9 +233,9 @@ function slideDown() {
             squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
             squares[ind + shift].innerHTML = squares[ind].innerHTML; 
             styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
-            if (squares[ind].innerHTML === '0') shift = shift + FIELD_WIDTH;
+            if (squares[ind].innerHTML === '') shift = shift + FIELD_WIDTH;
             else if (shift > 0 && squares[ind].innerHTML != 0) {
-                squares[ind].innerHTML = '0';
+                squares[ind].innerHTML = '';
                 styleNumber(squares[ind], squares[ind].innerHTML);
                 slideCheck++;
             }
@@ -249,7 +253,7 @@ function merge(way) {
             //let shift = 0;
             for (let j = FIELD_WIDTH - 1; j >= 1; j--) {
                 let ind = way == "mergeRight" ? i * FIELD_WIDTH + j : j * FIELD_WIDTH + i;
-                if (squares[ind].innerHTML === squares[ind + indShift].innerHTML && squares[ind].innerHTML !== '0') {
+                if (squares[ind].innerHTML === squares[ind + indShift].innerHTML && squares[ind].innerHTML !== '') {
                     mergeOps(ind, indShift);
                     j--;
                     mergeCheck++;
@@ -262,7 +266,7 @@ function merge(way) {
             //let shift = 0;
             for (let j = 0; j <= FIELD_WIDTH - 2; j++) {
                 let ind = way == "mergeLeft" ? i * FIELD_WIDTH + j : j * FIELD_WIDTH + i;
-                if (squares[ind].innerHTML === squares[ind + indShift].innerHTML && squares[ind].innerHTML !== '0') {
+                if (squares[ind].innerHTML === squares[ind + indShift].innerHTML && squares[ind].innerHTML !== '') {
                     mergeOps(ind, indShift);
                     j++;
                     mergeCheck++;
@@ -277,7 +281,7 @@ function mergeOps(ind, indShift) {
     squares[ind].innerHTML *= 2;
     addScore(squares[ind].innerHTML);
     styleNumber(squares[ind], squares[ind].innerHTML);
-    squares[ind + indShift].innerHTML = '0';
+    squares[ind + indShift].innerHTML = '';
     styleNumber(squares[ind + indShift], squares[ind + indShift].innerHTML);
 }
 
@@ -297,7 +301,7 @@ function checkWin() {
 }
 function checkLost() {
     let message = 'You Lost :(' + checkBestScore();
-    if (!squares.some(square => square.innerHTML === '0')) {
+    if (!squares.some(square => square.innerHTML === '')) {
         popupMessage(message);
         return true;
     } else {
@@ -335,6 +339,7 @@ function checkBestScore() {
 
 // Define the touchend event handler function
 function handleTouchEnd(event) {
+
     var diffX = endX - startX;
     var diffY = endY - startY;
 
@@ -361,6 +366,7 @@ function handleTouchEnd(event) {
 /** Style function for numer div - font and background colour  */
 function styleNumber(square, style) {
     const colorMap = {
+        '': '#bbb',
         '2': '#afa',
         '4': '#6f6',
         '8': '#1f1',
@@ -375,7 +381,7 @@ function styleNumber(square, style) {
     }
         
     square.style.backgroundColor = colorMap[style] || '';
-    square.style.color = style === '0' ? '#bbb' : '#333';
+    //square.style.color = style === '' ? '#bbb' : '#333';
 }
 
 /** Remove Event Listeners */
