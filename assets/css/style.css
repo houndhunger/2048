@@ -109,7 +109,10 @@ header {
   /*order: 5;*/
 }
 
-
+/* Instructions toggle  - checkbox */
+#instructions-toggle {
+  display: none;
+}
 
 /* Hide instructions by default */
 #instructions-text {

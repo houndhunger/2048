@@ -41,12 +41,12 @@ function initializeGame() {
 function touchStart(event) {
     startX = event.touches[0].clientX;
     startY = event.touches[0].clientY;
-};
+}
 
 function touchmove(event) {
     endX = event.touches[0].clientX;
     endY = event.touches[0].clientY;
-};
+}
 
  
 /** 
@@ -77,7 +77,7 @@ function setNewGame() {
 /** Set the game board  */ 
 function drawGameBoard() {
     for (let i = 0; i < FIELD_WIDTH * FIELD_WIDTH; i++) {
-        square = document.createElement('div');
+        let square = document.createElement('div');
         square.innerHTML = '0';
         GAME_FIELD.appendChild(square);
         styleNumber(square, '0');
@@ -93,9 +93,9 @@ function eraseGameBoard() {
     }
 
 function genNewNumber() {
-    let randomPosition
+    let randomPosition;
     do {
-        randomPosition = Math.floor(Math.random() * (FIELD_WIDTH * FIELD_WIDTH))
+        randomPosition = Math.floor(Math.random() * (FIELD_WIDTH * FIELD_WIDTH));
     } while (squares[randomPosition].innerHTML != 0);
     const randomNumber = Math.random() < 0.9 ? 2 : 4;
     squares[randomPosition].innerHTML = randomNumber;
@@ -118,8 +118,16 @@ function handleKeyDown(event) {
     // Prevent the default scrolling behavior
     event.key.startsWith("Arrow") ? event.preventDefault() : undefined;
     
+    /*
+    // Scroll all the way down
+    window.scrollBy({
+        top: window.innerHeight,
+        left: 0,
+        behavior: 'smooth'
+    });*/
+
     // Hide instructions
-    document.getElementById("instructions-toggle").checked = false;   
+    document.getElementById("instructions-toggle").checked = false; 
 
     switch (event.key) {
         case 'ArrowUp':
@@ -238,7 +246,7 @@ function merge(way) {
     if (way == "mergeRight" || way == "mergeDown") {
         let indShift = way == "mergeRight" ? -1 : -FIELD_WIDTH;
         for (let i = FIELD_WIDTH - 1; i >= 0; i--) {
-            let shift = 0;
+            //let shift = 0;
             for (let j = FIELD_WIDTH - 1; j >= 1; j--) {
                 let ind = way == "mergeRight" ? i * FIELD_WIDTH + j : j * FIELD_WIDTH + i;
                 if (squares[ind].innerHTML === squares[ind + indShift].innerHTML && squares[ind].innerHTML !== '0') {
@@ -251,7 +259,7 @@ function merge(way) {
     } else if (way == "mergeLeft" || way == "mergeUp") {
         let indShift = way == "mergeLeft" ? 1 : FIELD_WIDTH;
         for (let i = 0; i <= FIELD_WIDTH - 1; i++) {
-            let shift = 0;
+            //let shift = 0;
             for (let j = 0; j <= FIELD_WIDTH - 2; j++) {
                 let ind = way == "mergeLeft" ? i * FIELD_WIDTH + j : j * FIELD_WIDTH + i;
                 if (squares[ind].innerHTML === squares[ind + indShift].innerHTML && squares[ind].innerHTML !== '0') {
@@ -298,7 +306,7 @@ function checkLost() {
 }
 
 function popupMessage(message) {
-    let potentialBest = checkBestScore();     
+    //let potentialBest = checkBestScore();     
     document.getElementById('popup-message').innerHTML = message;
     document.getElementById("popup-container").style.display = "flex";
     document.getElementById("start-again-btn").addEventListener("click", function() {
@@ -364,7 +372,7 @@ function styleNumber(square, style) {
         '512': '#f40',
         '1024': '#f00',
         '2048': '#f00',
-    };
+    }
         
     square.style.backgroundColor = colorMap[style] || '';
     square.style.color = style === '0' ? '#bbb' : '#333';
