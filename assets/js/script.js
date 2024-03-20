@@ -1,37 +1,85 @@
+/**
+ * @fileoverview Implements a game app for 2048.
+ * This app allows users to play the classic game of 2048, where they slide numbered tiles on a grid to merge them and reach the 2048 tile.
+ * The game provides features such as sliding tiles in different directions, merging adjacent tiles, and keeping track of the score.
+ * Users can play the game on various platforms, including desktop and mobile devices.
+ * This file contains the main functionality and logic for the 2048 game app.
+ * @version 1.0
+ *
+ * Table of Content:
+ * 1. 
+ * 
+ * 3. Game core logic functions (i.e. slide, merge)
+ * 4. Game secondary functions (i.e new game, check score)
+ * 
+ * 
+ * 
+ * 8. Support functions (i.e. styleing)
+ * 
+ * 
+ * 
+ * */
 
-    // set document variables
-    const gameField = document.getElementById('game-filed');
-    const score = document.getElementById('score-value');
-    const bestScore = document.getElementById('best-score-value');
-    let squares = [];
-    const width = 4;
-    var startX, startY, endX, endY;
+/** Set document variables */
+const GAME_FIELD = document.getElementById('game-board');
+const GAME_SCORE = document.getElementById('score-value');
+const BEST_SCORE = document.getElementById('best-score-value');
+const FIELD_WIDTH = 4;
+let squares = [];
+var startX, startY, endX, endY;
 
-function newGame() {
-    //location.reload();
-    
+document.addEventListener("DOMContentLoaded", initializeGame);
+
+function initializeGame() {
+    setNewGame();
+
+    // Add Event Listeners
+    document.addEventListener('touchstart', touchStart);
+    document.addEventListener('touchmove', touchmove);
+}
+
+function touchStart(event) {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+};
+
+function touchmove(event) {
+    endX = event.touches[0].clientX;
+    endY = event.touches[0].clientY;
+};
+
+ 
+/** 
+ * Game Seconday functions 
+ * */
+
+function resetGame() {
+    popupMessage("Do you want to start new game?") ? setNewGame() : undefined;
+}
+
+
+
+/** Set new game */
+function setNewGame() {
     // re-set document variables
     squares = [];
 
     eraseGameBoard();
     drawGameBoard();
-    
-    newBestScore();
+    checkBestScore();
 
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('touchend', handleTouchEnd);
-
     document.getElementById("popup-container").style.display = "none";
 }
 
-newGame();
 
-// set the game filed
+/** Set the game board  */ 
 function drawGameBoard() {
-    for (let i = 0; i < width * width; i++) {
+    for (let i = 0; i < FIELD_WIDTH * FIELD_WIDTH; i++) {
         square = document.createElement('div');
         square.innerHTML = '0';
-        gameField.appendChild(square);
+        GAME_FIELD.appendChild(square);
         styleNumber(square, '0');
         squares.push(square);
     }
@@ -40,100 +88,78 @@ function drawGameBoard() {
 }
 
 function eraseGameBoard() {
-        gameField.innerHTML = '';
-        score.innerHTML = '0';
+        GAME_FIELD.innerHTML = '';
+        GAME_SCORE.innerHTML = '0';
     }
 
-// genareate new number
 function genNewNumber() {
     let randomPosition
     do {
-        randomPosition = Math.floor(Math.random() * (width * width))
+        randomPosition = Math.floor(Math.random() * (FIELD_WIDTH * FIELD_WIDTH))
     } while (squares[randomPosition].innerHTML != 0);
     const randomNumber = Math.random() < 0.9 ? 2 : 4;
     squares[randomPosition].innerHTML = randomNumber;
     styleNumber(squares[randomPosition], randomNumber);
 }
 
+/** Write score to div  */
 function addScore(add) {
-    score.innerHTML = parseInt(score.innerHTML) + parseInt(add);
-}
-
-// number style
-function styleNumber(square, style) {
-    const colorMap = {
-        '2': '#afa',
-        '4': '#6f6',
-        '8': '#1f1',
-        '16': '#3f0',
-        '32': '#8f0',
-        '64': '#cf0',
-        '128': '#fd0',
-        '256': '#f90',
-        '512': '#f40',
-        '1024': '#f00',
-        '2048': '#f00',
-    };
-        
-    square.style.backgroundColor = colorMap[style] || '';
-    if (style === '0') {
-        square.style.color = '#bbb';
-    }
-    else
-        square.style.color = '#333';
+    GAME_SCORE.innerHTML = parseInt(GAME_SCORE.innerHTML) + parseInt(add);
 }
 
 // game controls - read arrow keys
 // Define the event listener function
 function handleKeyDown(event) {
+    //square.innerHTML === '' ? square.innerHTML = '0' : undefined;
     let mergeCheck = false;
     let slideCheck1 = false;
     let slideCheck2 = false;
+
+    // Prevent the default scrolling behavior
+    event.key.startsWith("Arrow") ? event.preventDefault() : undefined;
+    
+    // Hide instructions
+    document.getElementById("instructions-toggle").checked = false;   
+
     switch (event.key) {
         case 'ArrowUp':
             slideCheck1 = slideUp();
-            //mergeCheck = mergeUp();
             mergeCheck = merge("mergeUp");
-            lideCheck2 = slideUp();
+            slideCheck2 = slideUp();
             break;
         case 'ArrowDown':
             slideCheck1 = slideDown();
-            //mergeCheck = mergeDown();
             mergeCheck = merge("mergeDown");
             slideCheck2 = slideDown();
             break;
         case 'ArrowLeft':
             slideCheck1 = slideLeft();
-            //mergeCheck = mergeLeft();
             mergeCheck = merge("mergeLeft");
             slideCheck2 = slideLeft();
             break;
         case 'ArrowRight':
             slideCheck1 = slideRight();
-            //mergeCheck = mergeRight();
             mergeCheck = merge("mergeRight");
             slideCheck2 = slideRight();
             break;
         default:
             break;
     }
-    //console.log(mergeCheck);
     (checkWin() || checkLost()) ? removeEventListeners() : (mergeCheck || slideCheck1 || slideCheck2 ? genNewNumber() : undefined);
+    //square.innerHTML === '0' ? square.innerHTML = '' : undefined;
 }
 
-function removeEventListeners() {
-    document.removeEventListener('keydown', handleKeyDown);
-    document.removeEventListener('touchend', handleTouchEnd);
-}
+/**
+ * Game core logic functions
+ */
 
-/* Slide functions */
-
+/** Slide functions */
 function slideLeft() {
     let slideCheck = false;
-    for (let i = 0; i < width; i++) {
+    for (let i = 0; i < FIELD_WIDTH; i++) {
         let shift = 0;
-        for (let j = 0; j < width; j++) {
-            let ind = i * width + j;
+        for (let j = 0; j < FIELD_WIDTH; j++) {
+            let ind = i * FIELD_WIDTH + j;
             squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
             squares[ind - shift].innerHTML = squares[ind].innerHTML;
             styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
@@ -149,10 +175,10 @@ function slideLeft() {
 
 function slideRight() {
     let slideCheck = false;
-    for (let i = width - 1; i >= 0; i--) {
+    for (let i = FIELD_WIDTH - 1; i >= 0; i--) {
         let shift = 0;
-        for (let j = width - 1; j >= 0; j--) {
-            let ind = i * width + j;
+        for (let j = FIELD_WIDTH - 1; j >= 0; j--) {
+            let ind = i * FIELD_WIDTH + j;
             squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
             squares[ind + shift].innerHTML = squares[ind].innerHTML;
             styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
@@ -168,14 +194,14 @@ function slideRight() {
 
 function slideUp() {
     let slideCheck = false;
-    for (let i = 0; i < width; i++) {
+    for (let i = 0; i < FIELD_WIDTH; i++) {
         let shift = 0;
-        for (let j = 0; j < width; j++) {
-            let ind = j * width + i;
+        for (let j = 0; j < FIELD_WIDTH; j++) {
+            let ind = j * FIELD_WIDTH + i;
             squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
             squares[ind - shift].innerHTML = squares[ind].innerHTML; 
             styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
-            if (squares[ind].innerHTML === '0') shift = shift + width;
+            if (squares[ind].innerHTML === '0') shift = shift + FIELD_WIDTH;
             else if (shift > 0 && squares[ind].innerHTML != 0) {
                 squares[ind].innerHTML = '0';
                 styleNumber(squares[ind], squares[ind].innerHTML);
@@ -188,14 +214,14 @@ function slideUp() {
 
 function slideDown() {
     let slideCheck = false;
-    for (let i = width - 1; i >= 0; i--) {
+    for (let i = FIELD_WIDTH - 1; i >= 0; i--) {
         let shift = 0;
-        for (let j = width - 1; j >= 0; j--) {
-            let ind = j * width + i;
+        for (let j = FIELD_WIDTH - 1; j >= 0; j--) {
+            let ind = j * FIELD_WIDTH + i;
             squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
             squares[ind + shift].innerHTML = squares[ind].innerHTML; 
             styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
-            if (squares[ind].innerHTML === '0') shift = shift + width;
+            if (squares[ind].innerHTML === '0') shift = shift + FIELD_WIDTH;
             else if (shift > 0 && squares[ind].innerHTML != 0) {
                 squares[ind].innerHTML = '0';
                 styleNumber(squares[ind], squares[ind].innerHTML);
@@ -206,15 +232,15 @@ function slideDown() {
     return slideCheck;
 }
 
-/* Merge function */
+/* Merge function to merge adjacent numbers if equal */
 function merge(way) {
     let mergeCheck = 0;
     if (way == "mergeRight" || way == "mergeDown") {
-        let indShift = way == "mergeRight" ? -1 : -width;
-        for (let i = width - 1; i >= 0; i--) {
+        let indShift = way == "mergeRight" ? -1 : -FIELD_WIDTH;
+        for (let i = FIELD_WIDTH - 1; i >= 0; i--) {
             let shift = 0;
-            for (let j = width - 1; j >= 1; j--) {
-                let ind = way == "mergeRight" ? i * width + j : j * width + i;
+            for (let j = FIELD_WIDTH - 1; j >= 1; j--) {
+                let ind = way == "mergeRight" ? i * FIELD_WIDTH + j : j * FIELD_WIDTH + i;
                 if (squares[ind].innerHTML === squares[ind + indShift].innerHTML && squares[ind].innerHTML !== '0') {
                     mergeOps(ind, indShift);
                     j--;
@@ -223,11 +249,11 @@ function merge(way) {
             }
         }
     } else if (way == "mergeLeft" || way == "mergeUp") {
-        let indShift = way == "mergeLeft" ? 1 : width;
-        for (let i = 0; i <= width - 1; i++) {
+        let indShift = way == "mergeLeft" ? 1 : FIELD_WIDTH;
+        for (let i = 0; i <= FIELD_WIDTH - 1; i++) {
             let shift = 0;
-            for (let j = 0; j <= width - 2; j++) {
-                let ind = way == "mergeLeft" ? i * width + j : j * width + i;
+            for (let j = 0; j <= FIELD_WIDTH - 2; j++) {
+                let ind = way == "mergeLeft" ? i * FIELD_WIDTH + j : j * FIELD_WIDTH + i;
                 if (squares[ind].innerHTML === squares[ind + indShift].innerHTML && squares[ind].innerHTML !== '0') {
                     mergeOps(ind, indShift);
                     j++;
@@ -247,63 +273,57 @@ function mergeOps(ind, indShift) {
     styleNumber(squares[ind + indShift], squares[ind + indShift].innerHTML);
 }
 
-/* check Win & Lost functions */
+
+/**
+ * Game secondary functions
+ */
+
+/** Check Win & Lost functions including end game popup message */
 function checkWin() {
+    let message = 'Congratualtions, you\'ve done it. You Won! :)' + checkBestScore();    
     if (squares.some(square => square.innerHTML === '2048')) {
-        let potentialBest = newBestScore();
-        document.getElementById('popup-message').innerHTML = 'Congratualtions, you\'ve done it. You Won! :)' + potentialBest;
-        document.getElementById("popup-container").style.display = "flex";
-        document.getElementById("start-again-btn").addEventListener("click", function() {
-            newGame();
-            });
-            document.getElementById("cancel-btn").addEventListener("click", function() {
-            document.getElementById("popup-container").style.display = "none";
-            });
+        popupMessage(message);
         return true;
     } 
     return false;
 }
-
 function checkLost() {
+    let message = 'You Lost :(' + checkBestScore();
     if (!squares.some(square => square.innerHTML === '0')) {
-        let potentialBest = newBestScore();     
-        document.getElementById('popup-message').innerHTML = 'You Lost :(' + potentialBest;
-        document.getElementById("popup-container").style.display = "flex";
-        document.getElementById("start-again-btn").addEventListener("click", function() {
-            newGame();
-          });
-          document.getElementById("cancel-btn").addEventListener("click", function() {
-            document.getElementById("popup-container").style.display = "none";
-          });
+        popupMessage(message);
         return true;
     } else {
         return false;
     }
 }
 
-/* Score function */
-function newBestScore() {
+function popupMessage(message) {
+    let potentialBest = checkBestScore();     
+    document.getElementById('popup-message').innerHTML = message;
+    document.getElementById("popup-container").style.display = "flex";
+    document.getElementById("start-again-btn").addEventListener("click", function() {
+        setNewGame();
+        return true;
+      });
+      document.getElementById("cancel-btn").addEventListener("click", function() {
+        document.getElementById("popup-container").style.display = "none";
+        return false;       
+      });
+}
+
+/** Chcecks Game Score is Best Score */
+function checkBestScore() {
     let bestScr = localStorage.getItem('localBestScore');
-    if (score.innerHTML > bestScr) {
-        localStorage.setItem('localBestScore', score.innerHTML);
-        bestScore.innerHTML = score.innerHTML;
-        return 'Your new Best score is ' + bestScore.innerHTML + '.';
+    if (GAME_SCORE.innerHTML > bestScr) {
+        localStorage.setItem('localBestScore', GAME_SCORE.innerHTML);
+        BEST_SCORE.innerHTML = GAME_SCORE.innerHTML;
+        return 'Your new Best score is ' + BEST_SCORE.innerHTML + '.';
     } else {
-        bestScore.innerHTML = bestScr === null ? '0' : bestScr;
+        BEST_SCORE.innerHTML = bestScr === null ? '0' : bestScr;
         return '';
     }    
 }
 
-
-document.addEventListener('touchstart', function(event) {
-    startX = event.touches[0].clientX;
-    startY = event.touches[0].clientY;
-});
-
-document.addEventListener('touchmove', function(event) {
-    endX = event.touches[0].clientX;
-    endY = event.touches[0].clientY;
-});
 
 // Define the touchend event handler function
 function handleTouchEnd(event) {
@@ -324,4 +344,34 @@ function handleTouchEnd(event) {
             handleKeyDown({ key: 'ArrowUp' });
         }
     }
+}
+
+/** 
+ * Support functions
+ */
+
+/** Style function for numer div - font and background colour  */
+function styleNumber(square, style) {
+    const colorMap = {
+        '2': '#afa',
+        '4': '#6f6',
+        '8': '#1f1',
+        '16': '#3f0',
+        '32': '#8f0',
+        '64': '#cf0',
+        '128': '#fd0',
+        '256': '#f90',
+        '512': '#f40',
+        '1024': '#f00',
+        '2048': '#f00',
+    };
+        
+    square.style.backgroundColor = colorMap[style] || '';
+    square.style.color = style === '0' ? '#bbb' : '#333';
+}
+
+/** Remove Event Listeners */
+function removeEventListeners() {
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('touchend', handleTouchEnd);
 }

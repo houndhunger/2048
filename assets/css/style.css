@@ -109,10 +109,7 @@ header {
   /*order: 5;*/
 }
 
-/* Instructions toggle */
-#instructions-toggle {
-  display: none;
-}
+
 
 /* Hide instructions by default */
 #instructions-text {
@@ -166,7 +163,7 @@ footer ul li {
 }
 
 /* Game styles */
-#game-filed {
+#game-board {
   aspect-ratio: 1/1;
   width: 100%;
   padding: 5px;
@@ -179,7 +176,7 @@ footer ul li {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
-#game-filed div {
+#game-board div {
   /*aspect-ratio: 1/1;*/
   width: calc(25% - 8px);
   height: calc(25% - 8px);
@@ -235,13 +232,13 @@ footer ul li {
 @media screen and (min-width: 365px) {
 
   /* Game styles */
-  #game-filed {
+  #game-board {
     padding: 8px;
     /*border: 2px solid #bbb;*/
     border-radius: 10px;
   }
 
-  #game-filed div {
+  #game-board div {
     width: calc(25% - 10px);
     height: calc(25% - 10px);
     margin: 5px;
@@ -279,12 +276,12 @@ footer ul li {
   }
 
   /* Game styles */
-  #game-filed {
+  #game-board {
     width: 460px;
     padding: 10px;
   }
 
-  #game-filed div {
+  #game-board div {
     width: 100px;
     font-size: 47px;
   }

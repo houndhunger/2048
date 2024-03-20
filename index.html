@@ -32,7 +32,7 @@
     <div id="instructions">
   
       <div id="new-game" class="nav-button">
-        <h2 id="new-game-title" onclick="newGame()">new game</h2>
+        <h2 id="new-game-title" onclick="resetGame()">new game</h2>
       </div>
       <input type="checkbox" id="instructions-toggle">
       <label for="instructions-toggle" class="nav-button">
@@ -67,11 +67,10 @@
   </header>
   
   <main>
-    <div id="game-filed"></div>
+    <div id="game-board"></div>
     <div id="popup-container">
       <div id="popup">
         <p id="popup-message"></p>
-        <p>Start again?</p>
         <button id="start-again-btn">Start Again</button>
         <button id="cancel-btn">Cancel</button>
       </div>
