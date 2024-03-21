@@ -157,15 +157,13 @@ function resetGame() {
 
 /**
  * Game round - move cicle - receives arrow key - event.key and responds with tiles move and merge or game end.
+ * Android chrome default scrolling behavior on swipe down to refresh page is managed by CSS
  */
 function handleKeyDown(event) {
 
     let mergeCheck = false;
     let slideCheck1 = false;
     let slideCheck2 = false;
-
-    // Prevent the default scrolling behavior
-    if (event.key.startsWith("Arrow")) { event.preventDefault(); }
 
     // Hide instructions, it might be displayed
     document.getElementById("instructions-toggle").checked = false;
@@ -175,6 +173,8 @@ function handleKeyDown(event) {
             slideCheck1 = slideUp();
             mergeCheck = merge("mergeUp");
             slideCheck2 = slideUp();
+            mergeCheck = merge("mergeUp");
+
             break;
         case 'ArrowDown':
             slideCheck1 = slideDown();
