@@ -31,18 +31,18 @@ header {
   justify-content: space-between;
 }
 
+/* Title - Logo */
 #title {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
 }
 
-#title a {
+header > a {
   text-decoration: none;
   color: #333;
 }
 
-/* Logo */
 #main-title {
   font-size: 4em;
   margin-right: 15px;
@@ -84,11 +84,12 @@ header {
   text-transform: uppercase;
 }
 
-#score-board {
+#score-box {
   display: flex;
   width: 100%;
 }
 
+/* Text content */
 #instructions {
   display: flex;
   flex-direction: row;
@@ -148,7 +149,7 @@ footer ul li {
   margin: 15px;
 }
 
-/* Break - to fix issued on small screen sizes */
+/* Line break - to fix issue on small screen sizes */
 .break::after {
   content: "\A";
   white-space: pre;
@@ -221,7 +222,7 @@ footer ul li {
 /* Media query: small devices (365px and up) */
 @media screen and (min-width: 365px) {
 
-  /* Game styles */
+  /* 365px+ Game board */
   #game-board {
     padding: 8px;
     border-radius: 10px;
@@ -233,11 +234,12 @@ footer ul li {
     margin: 5px;
   }
 
+  /* 365px+ Footer */
   footer ul {
     text-align: left;
   }
 
-  /* Remove email break - to fix issued on small screen sizes */
+  /* Remove line break - to fix issue on small screen sizes */
   .break::after {
     content: "";
   }
@@ -246,16 +248,19 @@ footer ul li {
 /* Media query: Preferable size and size change to fix width for tablets and larger (487px and up) */
 @media screen and (min-width: 487px) {
 
+  /* 487px+ Header */ 
   header {
     width: 487px;
   }
 
-  #score-board {
+  /* 487px+ Score box */ 
+  #score-box {
     flex-wrap: wrap;
     align-content: center;
     width: 220px;
   }
 
+  /* 487px+ Navigation */ 
   .nav-display {
     width: 102.5px;
   }
@@ -263,7 +268,7 @@ footer ul li {
     width: 220px;
   }
 
-  /* Game styles */
+  /* 487px+ Game board */
   #game-board {
     width: 460px;
     padding: 10px;

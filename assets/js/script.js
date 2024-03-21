@@ -298,7 +298,7 @@ function mergeOps(ind, indShift) {
 /** Check Win & Lost sending result to modal message */
 function checkWin() {
     if (squares.some(square => square.innerHTML === '2048')) {
-        let message = 'Congratualtions, you\'ve done it. You Won! :)' + checkBestScore();
+        let message = 'Congratualtions, You Won! :)' + checkBestScore();
         popupMessage(message);
         return true;
     }
