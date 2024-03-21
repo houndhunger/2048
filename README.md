@@ -7,11 +7,16 @@ The 2048 game is a digital adaptation of the popular puzzle game. It aims to pro
 The 2048 game project is a web-based application designed to entertain users while challenging their strategic thinking and problem-solving skills. The game features a 4x4 grid where tiles with varying numbers can be combined by swiping or using arrow keys to merge them and ultimately reach the 2048 tile.
 
 ## User Stories
-- As a player new to 2048, I want clear instructions on how to play the game.
-- As a casual gamer, I want a user-friendly interface to navigate the game effortlessly.
-- As a strategic thinker, I want the game to provide challenging yet achievable goals.
-- As a mobile user, I want the game to be responsive and playable on my device.
-- As a competitive player, I want my high score to be tracked and displayed.
+- **As a player new to 2048**, I want clear instructions on how to play the game.
+    - Instructions are provided for easy understanding.
+- **As a casual gamer**, I want a user-friendly interface to navigate the game effortlessly.
+    - The game interface is intuitive and easy to navigate, making it addictive to play.
+- **As a strategic thinker**, I want the game to provide challenging yet achievable goals.
+    - The game offers challenging goals while ensuring they are achievable, keeping players engaged.
+- **As a mobile user**, I want the game to be responsive and playable on my device.
+    - The game is optimized for smaller screens and responds to swipes. Additionally, it prevents accidental webpage refreshing when swiping down.
+- **As a competitive player**, I want my high score to be tracked and displayed.
+    - The game tracks and displays the player's current score in real-time. Additionally, the top score achieved in a single game session is recorded and displayed.
 
 ## Features
 - **Instructions:** Clear instructions provided at the beginning of the game to guide players on how to play.
@@ -23,12 +28,13 @@ The 2048 game project is a web-based application designed to entertain users whi
 
 ## Structure
 The game interface consists of the following elements:
-- **Grid:** A 4x4 grid where numbered tiles are displayed and merged.
-- **Display game score:** Display user score
-- **Display best score:** Keeps history locally user best score
+- **Logo:** A simple, text-based element stating "2048 game", reflecting the simplicity and beauty of the game's logic.
+- **Grid:** A 4x4 grid displaying numbered tiles that can be merged.
+- **Display Game Score:** Shows the user's current score during gameplay.
+- **Display Best Score:** Keeps track of the user's best score locally.
 - **Instructions Button:** Provides brief instructions on how to play the game.
 - **New Game Button:** Allows players to start a new game at any time.
-- **Footer:** Developer contact
+- **Footer:** Includes developer contact information.
 
 
 ## Development Process
@@ -74,25 +80,28 @@ The game interface consists of the following elements:
 The website was tested in the Google Chrome browser for various screen sizes.
 Web accessibility evaluation was tested with [Wave](https://wave.webaim.org/):
 - [index.html](https://wave.webaim.org/report#/https://houndhunger.github.io/2048/)
-No errors or warnings were found.
+No Errors or Alerts were identified.
 
-Analyzing with Lighthouse in Google Chrome was done with the following scores:
+Analyzing with Lighthouse in Google Chrome was done with full 100% score:
+[Lghthouse score](/readmedocs/testing-images/lighthouse-mobile.png)
 
-index.html | gallery.html | index.html - mobile device
-:---: | :---: | :---:
-![Analyzeing with Lighthouse - index.html](/readmedocs/testing-images/lighthouse-home.png) | ![Analyzeing with Lighthouse - galllery.html](/readmedocs/testing-images/lighthouse-gallery.png) | ![Analyzeing with Lighthouse - index.html for mobile device](/readmedocs/testing-images/lighthouse-mobile.png)
-
-Improvements and issues (8) were caused by the 3rd party extension.
-
-### Code validation
-HTML code was validated successfully with no errors or warnings:
+### Code validation 
+- **HTML** code was validated successfully with no errors or warnings:
 - [index.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2F2048%2F)
+- **CSS** validation with no errors:
+- [style.css](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fhoundhunger.github.io%2F2048%2Fassets%2Fcss%2Fstyle.css&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
+- **JavaScript** errors or potential problems were identified with analized [JSHint](hhttps://jshint.com/)
+Metrics informed me that there is room for improvements. Because of lack of time I couldn't improve the code more. More improvements will happened in future releases.
+There is lot of warnning which I find acceptable. Important is there are no errors.
 
+### Test Cases
+- User plays the game, sliding and merging tiles to achieve higher numbers.
+- User ends the game and surpasses their previous best score, ensuring successful updating of the best score.
+- User loses the game, triggering a modal popup message and potentially updating the best score. Both ending the game and restarting function correctly.
+- User wins the game, resulting in a modal popup message and possible update of the best score. Both ending the game and restarting work as expected.
+- User clicks on the Instructions button, causing the instructions to slide down and up. Additionally, the instructions slide back up when the user starts playing, bringing the game board back into view.
+- User restarts the game, initiating a new game successfully by resetting the board, tiles, and score.
 
-CSS validation with no errors:
-- [style.css](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Fassets%2Fcss%2Fstyle.css&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
-
-### Test cases
 
 - Home - image cover:
     - When the user accesses the Home page, an image cover scales to 100% width or height to cover the screen. This cover image is responsive to changes in screen size to maintain its coverage. Users can scroll down to reach the footer.
@@ -149,6 +158,7 @@ CSS validation with no errors:
     - The form was submitted successfully.
     
     ![Test case - Contact - submiy](/readmedocs/testing-images/contact-submit.png)
+
 
 ## Deployment
 The 2048 game can be deployed as a standalone web application or hosted on a web server for online access. It can be easily integrated into existing websites or platforms for users to enjoy.
