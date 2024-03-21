@@ -5,6 +5,7 @@
  * Users can play the game on various platforms, including desktop and mobile devices.
  * This file contains the main functionality and logic for the 2048 game app.
  * @version 1.0
+ * @author Daniel Pribula
  *
  * Table of Content:
  * 1. Script variables & Game initializationn
@@ -12,13 +13,11 @@
  * 3. Game core logic functions (i.e. slide & merge)
  * 4. Game primary functions (i.e reset game)
  * 5. Game secondary functions (i.e check score)
- * 6. Support functions (i.e. styleing)
- *   
- * */
+ * 6. Support functions (i.e. pop-up, styleing) 
+ */
 
 /** 
  * Script variables & Game initialization
- *
  */
 /** Set script variables */
 const GAME_FIELD = document.getElementById('game-board');
@@ -35,7 +34,7 @@ function initializeGame() {
     addEventListeners();
 }
 
-/**  Define the touchend event handler function */
+/**  Handles touch end - swipe */
 function handleTouchEnd(event) {
 
     var diffX = endX - startX;
@@ -71,18 +70,15 @@ function addEventListeners() {
     document.addEventListener('touchmove', touchMove);
 }
 function removeEventListeners() {
+    document.removeEventListener('touchstart', touchStart);
+    document.removeEventListener('touchmove', touchMove);
     document.removeEventListener('keydown', handleKeyDown);
     document.removeEventListener('touchend', handleTouchEnd);
 }
 
 /** 
- * Game functions 
- * */
-/** Reset game - shows modal message and sets new game */
-function resetGame() {
-    popupMessage("Do you want to start new game?") ? setNewGame() : undefined;
-}
-
+ * Game primary functions 
+ */
 /** Set new game stepps */
 function setNewGame() {
     // re-set document variables
@@ -100,7 +96,6 @@ function setNewGame() {
     document.getElementById("popup-container").style.display = "none";
 }
 
-
 /** Set the game board  */
 function drawGameBoard() {
     for (let i = 0; i < FIELD_WIDTH * FIELD_WIDTH; i++) {
@@ -114,22 +109,18 @@ function drawGameBoard() {
     genNewNumber();
 }
 
+/** Erase game board */
 function eraseGameBoard() {
     GAME_FIELD.innerHTML = '';
     GAME_SCORE.innerHTML = '0';
 }
 
-function genNewNumber() {
-    let randomPosition;
-    do {
-        randomPosition = Math.floor(Math.random() * (FIELD_WIDTH * FIELD_WIDTH));
-    } while (squares[randomPosition].innerHTML != 0);
-    const randomNumber = Math.random() < 0.9 ? 2 : 4;
-    squares[randomPosition].innerHTML = randomNumber;
-    styleNumber(squares[randomPosition], "NEW" + randomNumber);
+/** Reset game - shows modal message and sets new game */
+function resetGame() {
+    popupMessage("Do you want to start new game?") ? setNewGame() : undefined;
 }
 
-/** Game controls - read arrow keys */
+/** Game move - cicle - read arrow keys */
 function handleKeyDown(event) {
 
     let mergeCheck = false;
@@ -139,7 +130,7 @@ function handleKeyDown(event) {
     // Prevent the default scrolling behavior
     event.key.startsWith("Arrow") ? event.preventDefault() : undefined;
 
-    // Hide instructions
+    // Hide instructions, might be displayed
     document.getElementById("instructions-toggle").checked = false;
 
     switch (event.key) {
@@ -167,13 +158,25 @@ function handleKeyDown(event) {
             break;
     } 
     
+    // if ok generate number
     (checkWin() || checkLost()) ? removeEventListeners() : (mergeCheck || slideCheck1 || slideCheck2 ? genNewNumber() : undefined);
+}
+
+/** Generate new number - 90% 2 or 10% 4 */
+function genNewNumber() {
+    let randomPosition;
+    do {
+        randomPosition = Math.floor(Math.random() * (FIELD_WIDTH * FIELD_WIDTH));
+    } while (squares[randomPosition].innerHTML != 0);
+    const randomNumber = Math.random() < 0.9 ? 2 : 4;
+    squares[randomPosition].innerHTML = randomNumber;
+    styleNumber(squares[randomPosition], "NEW" + randomNumber);
 }
 
 /**
  * Game core logic functions
  */
-/** Slide functions */
+/** Slide functions to slide numbers to the side */
 function slideLeft() {
     let didSlide = false;
     for (let i = 0; i < FIELD_WIDTH; i++) {
@@ -187,7 +190,6 @@ function slideLeft() {
     }
     return didSlide;
 }
-
 function slideRight() {
     let didSlide = false;
     for (let i = FIELD_WIDTH - 1; i >= 0; i--) {
@@ -201,7 +203,6 @@ function slideRight() {
     }
     return didSlide;
 }
-
 function slideUp() {
     let didSlide = false;
     for (let i = 0; i < FIELD_WIDTH; i++) {
@@ -215,7 +216,6 @@ function slideUp() {
     }
     return didSlide;
 }
-
 function slideDown() {
     let didSlide = false;
     for (let i = FIELD_WIDTH - 1; i >= 0; i--) {
@@ -251,7 +251,7 @@ function slideOp(ind, shift, shiftConst, didSlide, direction) {
     return result;
 }
 
-/* Merge function to merge adjacent numbers if equal */
+/* Merge functions to merge adjacent numbers if equal */
 function merge(way) {
     let mergeCheck = 0;
     if (way == "mergeRight" || way == "mergeDown") {
@@ -312,21 +312,6 @@ function checkLost() {
     }
 }
 
-/** Popup - modal function shows message window  */
-function popupMessage(message) {
-    document.getElementById('popup-message').innerHTML = message;
-    document.getElementById("popup-container").style.display = "flex";
-    document.getElementById("start-again-btn").addEventListener("click", function () {
-        setNewGame();
-        return true;
-    });
-    document.getElementById("cancel-btn").addEventListener("click", function () {
-        document.getElementById("popup-container").style.display = "none";
-        return false;
-    });
-}
-
-
 /** Chcecks Game Score is Best Score */
 function checkBestScore() {
     let bestScr = localStorage.getItem('localBestScore');
@@ -349,6 +334,20 @@ function addScore(add) {
 /** 
  * Support functions
  */
+/** Popup - modal function shows message window  */
+function popupMessage(message) {
+    document.getElementById('popup-message').innerHTML = message;
+    document.getElementById("popup-container").style.display = "flex";
+    document.getElementById("start-again-btn").addEventListener("click", function () {
+        setNewGame();
+        return true;
+    });
+    document.getElementById("cancel-btn").addEventListener("click", function () {
+        document.getElementById("popup-container").style.display = "none";
+        return false;
+    });
+}
+
 /** Style background colour for div with number */
 function styleNumber(square, style) {
     const colorMap = {
