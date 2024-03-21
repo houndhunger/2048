@@ -7,20 +7,20 @@
  * @version 1.0
  *
  * Table of Content:
- * 1. 
- * 
- * 3. Game core logic functions (i.e. slide, merge)
- * 4. Game secondary functions (i.e new game, check score)
- * 
- * 
- * 
- * 8. Support functions (i.e. styleing)
- * 
- * 
- * 
+ * 1. Script variables & Game initializationn
+ * 2. Event listeners
+ * 3. Game core logic functions (i.e. slide & merge)
+ * 4. Game primary functions (i.e reset game)
+ * 5. Game secondary functions (i.e check score)
+ * 6. Support functions (i.e. styleing)
+ *   
  * */
 
-/** Set document variables */
+/** 
+ * Script variables & Game initialization
+ *
+ */
+/** Set script variables */
 const GAME_FIELD = document.getElementById('game-board');
 const GAME_SCORE = document.getElementById('score-value');
 const BEST_SCORE = document.getElementById('best-score-value');
@@ -28,38 +28,62 @@ const FIELD_WIDTH = 4;
 let squares = [];
 var startX, startY, endX, endY;
 
+/** Initalize game */
 document.addEventListener("DOMContentLoaded", initializeGame);
-
 function initializeGame() {
     setNewGame();
-
-    // Add Event Listeners
-    document.addEventListener('touchstart', touchStart);
-    document.addEventListener('touchmove', touchmove);
+    addEventListeners();
 }
 
+/**  Define the touchend event handler function */
+function handleTouchEnd(event) {
+
+    var diffX = endX - startX;
+    var diffY = endY - startY;
+
+    // Determine the direction of the swipe (10 for exidental touchges)
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 10) {
+            handleKeyDown({ key: 'ArrowRight' });
+        } else if (diffX < -10) {
+            handleKeyDown({ key: 'ArrowLeft' });
+        }
+    } else {
+        if (diffY > 10) {
+            handleKeyDown({ key: 'ArrowDown' });
+        } else if (diffY < -10) {
+            handleKeyDown({ key: 'ArrowUp' });
+        }
+    }
+}
 function touchStart(event) {
     startX = event.touches[0].clientX;
     startY = event.touches[0].clientY;
 }
-
-function touchmove(event) {
+function touchMove(event) {
     endX = event.touches[0].clientX;
     endY = event.touches[0].clientY;
 }
 
- 
-/** 
- * Game Seconday functions 
- * */
+/** Add and Remove Event Listeners */
+function addEventListeners() {
+    document.addEventListener('touchstart', touchStart);
+    document.addEventListener('touchmove', touchMove);
+}
+function removeEventListeners() {
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('touchend', handleTouchEnd);
+}
 
+/** 
+ * Game functions 
+ * */
+/** Reset game - shows modal message and sets new game */
 function resetGame() {
     popupMessage("Do you want to start new game?") ? setNewGame() : undefined;
 }
 
-
-
-/** Set new game */
+/** Set new game stepps */
 function setNewGame() {
     // re-set document variables
     squares = [];
@@ -68,13 +92,16 @@ function setNewGame() {
     drawGameBoard();
     checkBestScore();
 
+    // handle keyboard
     document.addEventListener('keydown', handleKeyDown);
+    // handle touch
     document.addEventListener('touchend', handleTouchEnd);
+    
     document.getElementById("popup-container").style.display = "none";
 }
 
 
-/** Set the game board  */ 
+/** Set the game board  */
 function drawGameBoard() {
     for (let i = 0; i < FIELD_WIDTH * FIELD_WIDTH; i++) {
         let square = document.createElement('div');
@@ -88,9 +115,9 @@ function drawGameBoard() {
 }
 
 function eraseGameBoard() {
-        GAME_FIELD.innerHTML = '';
-        GAME_SCORE.innerHTML = '0';
-    }
+    GAME_FIELD.innerHTML = '';
+    GAME_SCORE.innerHTML = '0';
+}
 
 function genNewNumber() {
     let randomPosition;
@@ -102,37 +129,18 @@ function genNewNumber() {
     styleNumber(squares[randomPosition], "NEW" + randomNumber);
 }
 
-/** Write score to div  */
-function addScore(add) {
-    add === '' ? add = '0' : undefined;
-    GAME_SCORE.innerHTML = parseInt(GAME_SCORE.innerHTML) + parseInt(add);
-}
-
-// game controls - read arrow keys
-// Define the event listener function
+/** Game controls - read arrow keys */
 function handleKeyDown(event) {
-    
+
     let mergeCheck = false;
     let slideCheck1 = false;
     let slideCheck2 = false;
 
     // Prevent the default scrolling behavior
     event.key.startsWith("Arrow") ? event.preventDefault() : undefined;
-    
-    /*
-    // Scroll all the way down
-    window.scrollBy({
-        top: window.innerHeight,
-        left: 0,
-        behavior: 'smooth'
-    });*/
 
     // Hide instructions
-    document.getElementById("instructions-toggle").checked = false; 
-/*
-    squares.forEach(square => {
-        square.innerHTML === '' ? square.innerHTML = '0' : undefined;
-    });*/
+    document.getElementById("instructions-toggle").checked = false;
 
     switch (event.key) {
         case 'ArrowUp':
@@ -157,15 +165,14 @@ function handleKeyDown(event) {
             break;
         default:
             break;
-    }
+    } 
+    
     (checkWin() || checkLost()) ? removeEventListeners() : (mergeCheck || slideCheck1 || slideCheck2 ? genNewNumber() : undefined);
-    //square.innerHTML === '0' ? square.innerHTML = '' : undefined;
 }
 
 /**
  * Game core logic functions
  */
-
 /** Slide functions */
 function slideLeft() {
     let didSlide = false;
@@ -174,7 +181,7 @@ function slideLeft() {
         for (let j = 0; j < FIELD_WIDTH; j++) {
             let ind = i * FIELD_WIDTH + j;
             let result = slideOp(ind, shift, 1, didSlide, "slideLeft");
-            didSlide =  didSlide || result.didSlide;
+            didSlide = didSlide || result.didSlide;
             shift = result.shift;
         }
     }
@@ -188,7 +195,7 @@ function slideRight() {
         for (let j = FIELD_WIDTH - 1; j >= 0; j--) {
             let ind = i * FIELD_WIDTH + j;
             let result = slideOp(ind, shift, 1, didSlide, "slideRight");
-            didSlide =  didSlide || result.didSlide;
+            didSlide = didSlide || result.didSlide;
             shift = result.shift;
         }
     }
@@ -202,7 +209,7 @@ function slideUp() {
         for (let j = 0; j < FIELD_WIDTH; j++) {
             let ind = j * FIELD_WIDTH + i;
             let result = slideOp(ind, shift, FIELD_WIDTH, didSlide, "slideUp");
-            didSlide =  didSlide || result.didSlide;
+            didSlide = didSlide || result.didSlide;
             shift = result.shift;
         }
     }
@@ -216,7 +223,7 @@ function slideDown() {
         for (let j = FIELD_WIDTH - 1; j >= 0; j--) {
             let ind = j * FIELD_WIDTH + i;
             let result = slideOp(ind, shift, FIELD_WIDTH, didSlide, "slideDown");
-            didSlide =  didSlide || result.didSlide;
+            didSlide = didSlide || result.didSlide;
             shift = result.shift;
         }
     }
@@ -225,13 +232,15 @@ function slideDown() {
 
 function slideOp(ind, shift, shiftConst, didSlide, direction) {
     squares[ind].innerHTML > 0 && shift > 0 ? didSlide = true : undefined;
-    if ((direction === "slideDown" || direction === "slideRight") && shift>0) {
+    if ((direction === "slideDown" || direction === "slideRight") && shift > 0) {
         squares[ind + shift].innerHTML = squares[ind].innerHTML;
         styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
-    } 
-    else  if (shift>0) {
+        console.log('plu'+(ind + shift));
+    }
+    else if ((direction === "slideUp" || direction === "slideLeft") && shift > 0) {
         squares[ind - shift].innerHTML = squares[ind].innerHTML;
         styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
+        console.log('min'+(ind - shift));
     }
     if (squares[ind].innerHTML === '') shift = shift + shiftConst;
     else if (shift > 0 && squares[ind].innerHTML != 0) {
@@ -270,7 +279,7 @@ function merge(way) {
             }
         }
     }
-        return mergeCheck;
+    return mergeCheck;
 }
 
 function mergeOps(ind, indShift) {
@@ -281,18 +290,16 @@ function mergeOps(ind, indShift) {
     styleNumber(squares[ind + indShift], squares[ind + indShift].innerHTML);
 }
 
-
 /**
  * Game secondary functions
  */
-
 /** Check Win & Lost sending result to modal message */
 function checkWin() {
     if (squares.some(square => square.innerHTML === '2048')) {
-        let message = 'Congratualtions, you\'ve done it. You Won! :)' + checkBestScore();    
+        let message = 'Congratualtions, you\'ve done it. You Won! :)' + checkBestScore();
         popupMessage(message);
         return true;
-    } 
+    }
     return false;
 }
 function checkLost() {
@@ -305,18 +312,20 @@ function checkLost() {
     }
 }
 
+/** Popup - modal function shows message window  */
 function popupMessage(message) {
     document.getElementById('popup-message').innerHTML = message;
     document.getElementById("popup-container").style.display = "flex";
-    document.getElementById("start-again-btn").addEventListener("click", function() {
+    document.getElementById("start-again-btn").addEventListener("click", function () {
         setNewGame();
         return true;
-      });
-      document.getElementById("cancel-btn").addEventListener("click", function() {
+    });
+    document.getElementById("cancel-btn").addEventListener("click", function () {
         document.getElementById("popup-container").style.display = "none";
-        return false;       
-      });
+        return false;
+    });
 }
+
 
 /** Chcecks Game Score is Best Score */
 function checkBestScore() {
@@ -328,35 +337,18 @@ function checkBestScore() {
     } else {
         BEST_SCORE.innerHTML = bestScr === null ? '0' : bestScr;
         return '';
-    }    
+    }
 }
 
-// Define the touchend event handler function
-function handleTouchEnd(event) {
-
-    var diffX = endX - startX;
-    var diffY = endY - startY;
-
-    // Determine the direction of the swipe
-    if (Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX > 10) {
-            handleKeyDown({ key: 'ArrowRight'});
-        } else if (diffX < -10) {
-            handleKeyDown({ key: 'ArrowLeft'});
-        }
-    } else {
-        if (diffY > 10) {
-            handleKeyDown({ key: 'ArrowDown' });
-        } else if (diffY < -10) {
-            handleKeyDown({ key: 'ArrowUp' });
-        }
-    }
+/** Write score to div  */
+function addScore(add) {
+    add === '' ? add = '0' : undefined;
+    GAME_SCORE.innerHTML = parseInt(GAME_SCORE.innerHTML) + parseInt(add);
 }
 
 /** 
  * Support functions
  */
-
 /** Style background colour for div with number */
 function styleNumber(square, style) {
     const colorMap = {
@@ -364,7 +356,7 @@ function styleNumber(square, style) {
         '2': '#afa',
         '4': '#6f6',
         'NEW2': '#eee',
-        'NEW4': '#ddd',      
+        'NEW4': '#ddd',
         '8': '#1f1',
         '16': '#3f0',
         '32': '#8f0',
@@ -374,12 +366,6 @@ function styleNumber(square, style) {
         '512': '#f40',
         '1024': '#f00',
         '2048': '#f00',
-    }  
+    }
     square.style.backgroundColor = colorMap[style] || '';
-}
-
-/** Remove Event Listeners */
-function removeEventListeners() {
-    document.removeEventListener('keydown', handleKeyDown);
-    document.removeEventListener('touchend', handleTouchEnd);
 }
