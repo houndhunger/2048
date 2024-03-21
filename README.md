@@ -74,11 +74,7 @@ The game interface consists of the following elements:
 The website was tested in the Google Chrome browser for various screen sizes.
 Web accessibility evaluation was tested with [Wave](https://wave.webaim.org/):
 - [index.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/index.html)
-- [activities.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/activities.html)
-- [facilities.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/facilities.html)
-- [gallery.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/gallery.html)
-- [friends.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/friends.html)
-- [contact.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/contact.html)
+
 
 Only one Alert was outstanding - Redundant Link - Logo and Home in the Navigation menu have the same link to index.html.
 
