@@ -38,12 +38,6 @@ header {
   align-items: flex-end;
 }
 
-header > a {
-  display: flex;
-  text-decoration: none;
-  color: #333;
-}
-
 #main-title {
   font-size: 4em;
   margin-right: 15px;

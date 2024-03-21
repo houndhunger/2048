@@ -25,7 +25,7 @@ const GAME_SCORE = document.getElementById('score-value');
 const BEST_SCORE = document.getElementById('best-score-value');
 const FIELD_WIDTH = 4;
 let squares = [];
-var startX, startY, endX, endY;
+let startX, startY, endX, endY;
 
 /** Initalize game */
 document.addEventListener("DOMContentLoaded", initializeGame);
@@ -39,8 +39,8 @@ function initializeGame() {
 /**  Handles touch end - swipe */
 function handleTouchEnd(event) {
 
-    var diffX = endX - startX;
-    var diffY = endY - startY;
+    let diffX = endX - startX;
+    let diffY = endY - startY;
 
     // Determine the direction of the swipe - 10 for accidental touchges
     if (Math.abs(diffX) > Math.abs(diffY)) {
@@ -237,12 +237,10 @@ function slideOp(ind, shift, shiftConst, didSlide, direction) {
     if ((direction === "slideDown" || direction === "slideRight") && shift > 0) {
         squares[ind + shift].innerHTML = squares[ind].innerHTML;
         styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
-        console.log('plu'+(ind + shift));
     }
     else if ((direction === "slideUp" || direction === "slideLeft") && shift > 0) {
         squares[ind - shift].innerHTML = squares[ind].innerHTML;
         styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
-        console.log('min'+(ind - shift));
     }
     if (squares[ind].innerHTML === '') shift = shift + shiftConst;
     else if (shift > 0 && squares[ind].innerHTML != 0) {

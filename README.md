@@ -57,6 +57,7 @@ The game interface consists of the following elements:
 - **Tile Animation:** Smooth animations enhance the gaming experience by providing visual feedback when tiles merge.
 - **Sound Effects:** Optional sound effects add an immersive element to the gameplay experience.
 - **Advanced Strategies:** Integrate AI algorithms to provide hints or strategies for optimal gameplay.
+- **Vertical Fit:** Ensure the game adapts to prevent screen vertical height limits. For wide screens with small scaling, initiate vertical fit ensuring the game field remains fully visible on screens taller than 460px.
 
 ## Solved Bugs
 - In conditioms, like if(squares[ind].innerHTML === '0'), string is used, instead not mixing it with integer (squares[ind].innerHTML == 0).
@@ -64,9 +65,9 @@ The game interface consists of the following elements:
 - Prevent algorithm running outside of array range - game filed when looping thorugh it.
 - Prevent generating new number when nothing moved or merged.
 - Prevent swipe down and refresh game on touch devices.
+- Removed the link from the logo to prevent accidental clicks during gameplay.
 
 ## Unsolved Bugs
-- Game minimal height limit - Game starts vertical scrolling on less then 770px. Also game fild is fully vissible on screen shoving more then 460px vertically.
 
 ## Technologies Used
 - **HTML:** Used for the structure and layout of the game interface.
@@ -116,28 +117,6 @@ There is lot of warnning which I find acceptable. Important is there are no erro
     - Users can navigate further through relevant links on the webpage.
     
     ![Test case - Activities](/readmedocs/testing-images/activities2.png)
- ---
-- Gallery - size responsiveness and modal:
-    
-    ![Test case - Gallery](/readmedocs/feature-images/gallery.png)
-    - To access the Gallery, the user clicks on "Gallery" in the Navigation menu. The gallery is then displayed in a column format, with the number of columns adjusting based on the screen size.
-    - Users can click on a photo in the gallery to enlarge it, displaying a modal with the enlarged photo.
-    
-    ![Test case - Gallery - modal](/readmedocs/feature-images/gallery-modal.png)
-    - The modal can be closed by clicking anywhere on the screen or the "X" symbol in the top right corner of the modal for an obvious action.
-    - Users can then open another photo to display the modal.
- ---
-- Facilities:
-    - Users open the Facilities section by clicking on "Facilities" in the Navigation menu, leading to the display of the Facilities section.
-    - Users can navigate further through relevant links on the webpage.
-    
-    ![Test case - Facilities](/readmedocs/testing-images/facilities.png)
- ---
-- Friends:
-    - Users open the Friends section by clicking on "Friends" in the Navigation menu, leading to the display of the Friends section.
-    - Users can navigate further through relevant links on the webpage.
-    
-    ![Test case - Friends](/readmedocs/testing-images/friends.png)
  ---
 - Contact - Size Responsiveness, Form Restrictions, and Form Submission:
     - Users access the Contact section by clicking on "Contact" in the Navigation menu, leading to the display of the Contact section with a Contact form and a Google map displaying the park's location.
