@@ -9,7 +9,7 @@
 }
 
 html, body {
-  overscroll-behavior-y: contain; /* prevent swipe to refresh */
+  overscroll-behavior-y: contain; /* Prevent swipe to refresh */
 }
 
 /* General styles */
@@ -29,7 +29,6 @@ header {
   flex-wrap: wrap;
   align-self: center;
   justify-content: space-between;
-  /*align-items: flex-start;*/
 }
 
 #title {
@@ -43,6 +42,7 @@ header {
   color: #333;
 }
 
+/* Logo */
 #main-title {
   font-size: 4em;
   margin-right: 15px;
@@ -54,8 +54,8 @@ header {
   line-height: 1;
 }
 
+/* Navigation */
 .nav-button, .nav-display {
-  /*display: block;*/
   width: 100%;
   margin: 10px 0 0 0;
   padding: 10px;
@@ -66,7 +66,6 @@ header {
 }
 
 .nav-display {
-  /*width: 102.5px;*/
   background-color: #aaa;
   color: #333;
 }
@@ -76,7 +75,6 @@ header {
 }
 
 .nav-button {
-  /*width: 220px;*/
   background-color: #777;
   color: #eee;
   cursor: pointer;
@@ -88,13 +86,8 @@ header {
 
 #score-board {
   display: flex;
-  /*width: 220px;*/
   width: 100%;
 }
-/*
-#best-score, #score, #new-game, #instructions-toggle~label {
-  width: 100%;
-}*/
 
 #instructions {
   display: flex;
@@ -106,7 +99,6 @@ header {
 #description {
   display: block;
   margin: 0 0 10px 0;
-  /*order: 5;*/
 }
 
 /* Instructions toggle  - checkbox */
@@ -126,9 +118,6 @@ header {
 
 /* Show instructions when the checkbox is checked */
 #instructions-toggle:checked ~ #instructions-text {
-  /*display: bl
-  ock;
-  opacity: 1;*/
   max-height: 1500px;
 }
 
@@ -174,13 +163,11 @@ footer ul li {
   flex-wrap: wrap;
   justify-content: flex-start;
   background-color: #888;
-  /*border: 1px solid #555;*/
   border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
 #game-board div {
-  /*aspect-ratio: 1/1;*/
   width: calc(25% - 8px);
   height: calc(25% - 8px);
   margin: 4px;
@@ -237,7 +224,6 @@ footer ul li {
   /* Game styles */
   #game-board {
     padding: 8px;
-    /*border: 2px solid #bbb;*/
     border-radius: 10px;
   }
 
@@ -257,7 +243,7 @@ footer ul li {
   }
 }
 
-/* Media query: preferable size change to fix width at 487px */
+/* Media query: Preferable size and size change to fix width for tablets and larger (487px and up) */
 @media screen and (min-width: 487px) {
 
   header {
@@ -266,7 +252,6 @@ footer ul li {
 
   #score-board {
     flex-wrap: wrap;
-    /*justify-content: space-between;*/
     align-content: center;
     width: 220px;
   }
@@ -288,8 +273,4 @@ footer ul li {
     width: 100px;
     font-size: 47px;
   }
-}
-
-/* Media query: tablets and larger (579px and up) */
-@media screen and (min-width: 579px) {
 }

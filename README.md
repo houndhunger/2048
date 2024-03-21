@@ -73,13 +73,30 @@ The game interface consists of the following elements:
 ## Deployment
 The 2048 game can be deployed as a standalone web application or hosted on a web server for online access. It can be easily integrated into existing websites or platforms for users to enjoy.
 
+### Via Gitpod
+1. Upon starting the Gitpod online workspace,
+2. I initiated a Python web server using the command: ```"python3 -m http.server"```
+3. Gitpod prompted me to open the website within its environment.
+4. After making updates and saving them on Gitpod,
+5. I refreshed the website to reflect the changes.
+
+### Via GitHubb pages
+- The website is publicly accessible on GitHub:  [2048 game app](https://houndhunger.github.io/2048/)
+- The website repository is hosted at: [2048 game repository](https://github.com/houndhunger/2048)
+
+Upon completing any modifications:
+1. I added the changes using the command: ```git add .```
+2. Followed by committing them with a descriptive message: ```git commit -m “Something done”```
+3. Finally, I pushed the changes to the GitHub repository: ```git push```
+4. Refreshing the [Rushcliffe Country Park Github](https://houndhunger.github.io/Rushcliffe-Country-Park/) webpage reflected the updates.
+
 ## Credits
 - The original 2048 game was created by Gabriele Cirulli. Our project is inspired by his innovative game concept.
-- Game is already on github as basic concept. https://github.com/kubowania/2048/
-- Game algorithm https://www.baeldung.com/cs/2048-algorithm
+- Game is already on github as vanila game. [GitHub - kubowania - 2048](whttps://github.com/kubowania/2048/)
+- [Game algorithm](https://www.baeldung.com/cs/2048-algorithm)
 I went through quckly the structure of the code to give me a hint and kickstart. Since first function, I aranged the code myself.
-- Some inspiration also working game here: https://2048game.com/
-- Some online tutorials (https://css-tricks.com/snippets/css/a-guide-to-flexbox/), resources, and community forums provided valuable insights and assistance during the development process, but mostly assitance from ChatGPT. 
+- Some inspiration also [working game](https://2048game.com/)
+- Some online tutorials, like help with [flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/), provided valuable insights and assistance during the development process, but mostly assitance from ChatGPT.
 
 ## License
 This project is open-source and available under the MIT License. Feel free to fork, modify, and distribute the code for educational or commercial purposes.

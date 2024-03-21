@@ -32,6 +32,8 @@ document.addEventListener("DOMContentLoaded", initializeGame);
 function initializeGame() {
     setNewGame();
     addEventListeners();
+
+    document.getElementById('new-game-title').addEventListener('click', resetGame);
 }
 
 /**  Handles touch end - swipe */
@@ -365,6 +367,6 @@ function styleNumber(square, style) {
         '512': '#f40',
         '1024': '#f00',
         '2048': '#f00',
-    }
+    };
     square.style.backgroundColor = colorMap[style] || '';
 }
