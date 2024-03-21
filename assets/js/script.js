@@ -1,3 +1,4 @@
+/* global document, localStorage */
 /**
  * @fileoverview Implements a game app for 2048.
  * This app allows users to play the classic game of 2048, where they slide numbered tiles on a grid to merge them and reach the 2048 tile.
@@ -14,12 +15,16 @@
  * 4. Game primary functions (i.e reset game)
  * 5. Game secondary functions (i.e check score)
  * 6. Support functions (i.e. pop-up, styleing) 
+ * 
+ * Future improvements:
+ * - Handling event listeners might be pretier
+ * - Slide functions as Merge functions
+ * - Slide Operations and Merge Operations sholud have one function to write the values UpdateCells(CellRef1, CellRef2, CellValue1, CellValue2);
  */
 
-/** 
- * Script variables & Game initialization
+/**
+ * Set script variables.
  */
-/** Set script variables */
 const GAME_FIELD = document.getElementById('game-board');
 const GAME_SCORE = document.getElementById('score-value');
 const BEST_SCORE = document.getElementById('best-score-value');
@@ -27,22 +32,64 @@ const FIELD_WIDTH = 4;
 let squares = [];
 let startX, startY, endX, endY;
 
-/** Initalize game */
+/** 
+ * Handle document listener to initalize the game script.
+ */
 document.addEventListener("DOMContentLoaded", initializeGame);
+
+/** 
+ * Initalize Game script function.
+ */
 function initializeGame() {
     setNewGame();
-    addEventListeners();
 
-    document.getElementById('new-game').addEventListener('click', resetGame);
+    // handle document listener click on NEW GAME button
+    document.getElementById('new-game').addEventListener('click', resetGame); 
 }
 
-/**  Handles touch end - swipe */
+/** 
+ * Add Event Listeners.
+ */
+function addEventListeners() {
+    // handle document listener start position of the touch
+    document.addEventListener('touchstart', touchStart); 
+    // handle document listener end position of the touch
+    document.addEventListener('touchmove', touchMove); 
+    // handle document listener keyboard input
+    document.addEventListener('keydown', handleKeyDown); 
+    // handle document listener end of touch and does 
+    document.addEventListener('touchend', handleTouchEnd); 
+}
+
+function touchStart(event) {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+}
+
+function touchMove(event) {
+    endX = event.touches[0].clientX;
+    endY = event.touches[0].clientY;
+}
+
+/** 
+ * Remove Event Listeners.
+ */
+function removeEventListeners() {
+    document.removeEventListener('touchstart', touchStart);
+    document.removeEventListener('touchmove', touchMove);
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('touchend', handleTouchEnd);
+}
+
+/**
+ * Handles touch end - swipe and determine the direction of the swipe.
+ * 10 is a threshold for accidental touches.
+ */
 function handleTouchEnd(event) {
 
     let diffX = endX - startX;
     let diffY = endY - startY;
 
-    // Determine the direction of the swipe - 10 for accidental touchges
     if (Math.abs(diffX) > Math.abs(diffY)) {
         if (diffX > 10) {
             handleKeyDown({ key: 'ArrowRight' });
@@ -57,48 +104,26 @@ function handleTouchEnd(event) {
         }
     }
 }
-function touchStart(event) {
-    startX = event.touches[0].clientX;
-    startY = event.touches[0].clientY;
-}
-function touchMove(event) {
-    endX = event.touches[0].clientX;
-    endY = event.touches[0].clientY;
-}
-
-/** Add and Remove Event Listeners */
-function addEventListeners() {
-    document.addEventListener('touchstart', touchStart);
-    document.addEventListener('touchmove', touchMove);
-}
-function removeEventListeners() {
-    document.removeEventListener('touchstart', touchStart);
-    document.removeEventListener('touchmove', touchMove);
-    document.removeEventListener('keydown', handleKeyDown);
-    document.removeEventListener('touchend', handleTouchEnd);
-}
 
 /** 
- * Game primary functions 
+ * Set new game.
  */
-/** Set new game stepps */
 function setNewGame() {
     // re-set document variables
     squares = [];
 
     clearGameBoard();
     drawGameBoard();
-    checkBestScore();
 
-    // handle keyboard
-    document.addEventListener('keydown', handleKeyDown);
-    // handle touch
-    document.addEventListener('touchend', handleTouchEnd);
+    addEventListeners();
 
+    // hide modal - pop-up
     document.getElementById("popup-container").style.display = "none";
 }
 
-/** Set the game board  */
+/** 
+ * Set the game board.
+ */
 function drawGameBoard() {
     for (let i = 0; i < FIELD_WIDTH * FIELD_WIDTH; i++) {
         let square = document.createElement('div');
@@ -111,18 +136,28 @@ function drawGameBoard() {
     genNewNumber();
 }
 
-/** Clear the game board */
+/** 
+ * Clear the game board.
+ */
 function clearGameBoard() {
     GAME_FIELD.innerHTML = '';
     GAME_SCORE.innerHTML = '0';
 }
 
-/** Reset game - shows modal message and sets new game */
+/**
+ * Game reset - shows modal message and set new game.
+ */
 function resetGame() {
-    if (popupMessage("Do you want to start new game?")) { setNewGame(); }
+    if (popupMessage("Do you want to start new game?")) 
+    { 
+        // checkBestScore(); // - feature bug - When somone doen't want to update Best score can resetGame without writing in Best score.
+        setNewGame(); 
+    }
 }
 
-/** Game move - cicle - read arrow keys */
+/**
+ * Game round - move cicle - receives arrow key - event.key and responds with tiles move and merge or game end.
+ */
 function handleKeyDown(event) {
 
     let mergeCheck = false;
@@ -160,16 +195,19 @@ function handleKeyDown(event) {
             break;
     }
 
-    // if ok generate number
-    if ((checkWin() || checkLost())) {
+    
+    if ((checkWin() || checkLost())) // end the game
+    {
         removeEventListeners(); 
-    } else if (mergeCheck || slideCheck1 || slideCheck2) 
+    } else if (mergeCheck || slideCheck1 || slideCheck2) // generate number
     {
         genNewNumber();
     }
 }
 
-/** Generate new number - 90% no. 2 or 10% no. 4 */
+/**
+ * Generate new number - 90% no. 2 or 10% no. 4.
+ */
 function genNewNumber() {
     let randomPosition;
     do {
@@ -181,9 +219,8 @@ function genNewNumber() {
 }
 
 /**
- * Game score logic functions
+ * Slide the numbers to the Left side.
  */
-/** Slide functions to slide the numbers to the side */
 function slideLeft() {
     let didSlide = false;
     for (let i = 0; i < FIELD_WIDTH; i++) {
@@ -197,6 +234,10 @@ function slideLeft() {
     }
     return didSlide;
 }
+
+/**
+ * Slide the numbers to the Right side.
+ */
 function slideRight() {
     let didSlide = false;
     for (let i = FIELD_WIDTH - 1; i >= 0; i--) {
@@ -210,6 +251,10 @@ function slideRight() {
     }
     return didSlide;
 }
+
+/**
+ * Slide the numbers to the Up side.
+ */
 function slideUp() {
     let didSlide = false;
     for (let i = 0; i < FIELD_WIDTH; i++) {
@@ -223,6 +268,10 @@ function slideUp() {
     }
     return didSlide;
 }
+
+/**
+ * Slide the numbers to the Down side.
+ */
 function slideDown() {
     let didSlide = false;
     for (let i = FIELD_WIDTH - 1; i >= 0; i--) {
@@ -237,6 +286,9 @@ function slideDown() {
     return didSlide;
 }
 
+/**
+ * Slide opeations - write moved numbers to corresponding divs, update style...
+ */
 function slideOp(ind, shift, shiftConst, didSlide, direction) {
     if (squares[ind].innerHTML > 0 && shift > 0) { didSlide = true; }
     if ((direction === "slideDown" || direction === "slideRight") && shift > 0) {
@@ -256,7 +308,9 @@ function slideOp(ind, shift, shiftConst, didSlide, direction) {
     return result;
 }
 
-/* Merge functions to merge numbers if equal */
+/**
+ * Merge numbers if equal.
+ */ 
 function merge(way) {
     let mergeCheck = 0;
     if (way == "mergeRight" || way == "mergeDown") {
@@ -287,6 +341,9 @@ function merge(way) {
     return mergeCheck;
 }
 
+/**
+ * Merge operations - calculate new value, write it to div, update style, update score...
+ */ 
 function mergeOps(ind, indShift) {
     squares[ind].innerHTML *= 2;
     addScore(squares[ind].innerHTML);
@@ -295,10 +352,9 @@ function mergeOps(ind, indShift) {
     styleNumber(squares[ind + indShift], squares[ind + indShift].innerHTML);
 }
 
-/**
- * Game secondary functions
+/** 
+ * Check if end of the game is won and send result to pop-up - modal message.
  */
-/** Check Win & Lost sending result to pop-up - modal message */
 function checkWin() {
     if (squares.some(square => square.innerHTML === '2048')) {
         let message = 'Congratualtions, You Won! :)' + checkBestScore();
@@ -307,6 +363,10 @@ function checkWin() {
     }
     return false;
 }
+
+/** 
+ * Check if end of the game is lost and send result to pop-up - modal message.
+ */
 function checkLost() {
     if (!squares.some(square => square.innerHTML === '')) {
         let message = 'You Lost :(' + checkBestScore();
@@ -317,7 +377,9 @@ function checkLost() {
     }
 }
 
-/** Chcecks if Game Score is Best Score */
+/** 
+ * Chcecks if Game Score is Best Score and return message with the best score.
+ */
 function checkBestScore() {
     let bestScr = localStorage.getItem('localBestScore');
     if (parseInt(GAME_SCORE.innerHTML) > parseInt(bestScr)) {
@@ -330,16 +392,17 @@ function checkBestScore() {
     }
 }
 
-/** Write score to div score board  */
+/** 
+ * Write score to score board div.
+ */
 function addScore(add) {
     if (add === '') { add = '0'; }
     GAME_SCORE.innerHTML = parseInt(GAME_SCORE.innerHTML) + parseInt(add);
 }
 
 /** 
- * Support functions
+ * Pop-up - modal function shows message window. 
  */
-/** Pop-up - modal function shows message window  */
 function popupMessage(message) {
     document.getElementById('popup-message').innerHTML = message;
     document.getElementById("popup-container").style.display = "flex";
@@ -353,7 +416,9 @@ function popupMessage(message) {
     });
 }
 
-/** Style background colour for div with number */
+/**
+ * Style background colour for number in div.
+ */
 function styleNumber(square, style) {
     const colorMap = {
         '': '#bbb',
