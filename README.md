@@ -97,6 +97,7 @@ Upon completing any modifications:
 I went through quckly the structure of the code to give me a hint and kickstart. Since first function, I aranged the code myself.
 - Some inspiration also [working game](https://2048game.com/)
 - Some online tutorials, like help with [flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/), provided valuable insights and assistance during the development process, but mostly assitance from ChatGPT.
+- Big Thank You to my mentor who points me right direction every time.
 
 ## License
 This project is open-source and available under the MIT License. Feel free to fork, modify, and distribute the code for educational or commercial purposes.

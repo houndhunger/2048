@@ -8,9 +8,9 @@
  * @author Daniel Pribula
  *
  * Table of Content:
- * 1. Script variables & Game initializationn
+ * 1. Script variables & Game initialization
  * 2. Event listeners
- * 3. Game core logic functions (i.e. slide & merge)
+ * 3. Game core logic functions (i.e. slide, merge)
  * 4. Game primary functions (i.e reset game)
  * 5. Game secondary functions (i.e check score)
  * 6. Support functions (i.e. pop-up, styleing) 
@@ -42,7 +42,7 @@ function handleTouchEnd(event) {
     var diffX = endX - startX;
     var diffY = endY - startY;
 
-    // Determine the direction of the swipe (10 for exidental touchges)
+    // Determine the direction of the swipe - 10 for accidental touchges
     if (Math.abs(diffX) > Math.abs(diffY)) {
         if (diffX > 10) {
             handleKeyDown({ key: 'ArrowRight' });
@@ -86,7 +86,7 @@ function setNewGame() {
     // re-set document variables
     squares = [];
 
-    eraseGameBoard();
+    clearGameBoard();
     drawGameBoard();
     checkBestScore();
 
@@ -111,8 +111,8 @@ function drawGameBoard() {
     genNewNumber();
 }
 
-/** Erase game board */
-function eraseGameBoard() {
+/** Clear the game board */
+function clearGameBoard() {
     GAME_FIELD.innerHTML = '';
     GAME_SCORE.innerHTML = '0';
 }
@@ -132,7 +132,7 @@ function handleKeyDown(event) {
     // Prevent the default scrolling behavior
     event.key.startsWith("Arrow") ? event.preventDefault() : undefined;
 
-    // Hide instructions, might be displayed
+    // Hide instructions, it might be displayed
     document.getElementById("instructions-toggle").checked = false;
 
     switch (event.key) {
@@ -164,7 +164,7 @@ function handleKeyDown(event) {
     (checkWin() || checkLost()) ? removeEventListeners() : (mergeCheck || slideCheck1 || slideCheck2 ? genNewNumber() : undefined);
 }
 
-/** Generate new number - 90% 2 or 10% 4 */
+/** Generate new number - 90% no. 2 or 10% no. 4 */
 function genNewNumber() {
     let randomPosition;
     do {
@@ -176,9 +176,9 @@ function genNewNumber() {
 }
 
 /**
- * Game core logic functions
+ * Game score logic functions
  */
-/** Slide functions to slide numbers to the side */
+/** Slide functions to slide the numbers to the side */
 function slideLeft() {
     let didSlide = false;
     for (let i = 0; i < FIELD_WIDTH; i++) {
@@ -253,7 +253,7 @@ function slideOp(ind, shift, shiftConst, didSlide, direction) {
     return result;
 }
 
-/* Merge functions to merge adjacent numbers if equal */
+/* Merge functions to merge numbers if equal */
 function merge(way) {
     let mergeCheck = 0;
     if (way == "mergeRight" || way == "mergeDown") {
@@ -295,7 +295,7 @@ function mergeOps(ind, indShift) {
 /**
  * Game secondary functions
  */
-/** Check Win & Lost sending result to modal message */
+/** Check Win & Lost sending result to pop-up - modal message */
 function checkWin() {
     if (squares.some(square => square.innerHTML === '2048')) {
         let message = 'Congratualtions, You Won! :)' + checkBestScore();
@@ -314,7 +314,7 @@ function checkLost() {
     }
 }
 
-/** Chcecks Game Score is Best Score */
+/** Chcecks if Game Score is Best Score */
 function checkBestScore() {
     let bestScr = localStorage.getItem('localBestScore');
     if (parseInt(GAME_SCORE.innerHTML) > parseInt(bestScr)) {
@@ -327,7 +327,7 @@ function checkBestScore() {
     }
 }
 
-/** Write score to div  */
+/** Write score to div score board  */
 function addScore(add) {
     add === '' ? add = '0' : undefined;
     GAME_SCORE.innerHTML = parseInt(GAME_SCORE.innerHTML) + parseInt(add);
@@ -336,7 +336,7 @@ function addScore(add) {
 /** 
  * Support functions
  */
-/** Popup - modal function shows message window  */
+/** Pop-up - modal function shows message window  */
 function popupMessage(message) {
     document.getElementById('popup-message').innerHTML = message;
     document.getElementById("popup-container").style.display = "flex";
