@@ -96,6 +96,7 @@ Metrics analysis revealed opportunities for improvement in the code. Due to time
 
 ### Test Cases
 - User plays the game, sliding and merging tiles to achieve higher numbers.
+
 - User ends the game and surpasses their previous best score, ensuring successful updating of the best score.
 - User loses the game, triggering a modal popup message and potentially updating the best score. Both ending the game and restarting function correctly.
 - User wins the game, resulting in a modal popup message and possible update of the best score. Both ending the game and restarting work as expected.

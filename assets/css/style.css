@@ -9,7 +9,7 @@
 }
 
 html, body {
-  overscroll-behavior-y: contain; /* Prevent swipe to refresh */
+  overscroll-behavior-y: none; /* Prevent swipe to refresh or */
 }
 
 /* General styles */
