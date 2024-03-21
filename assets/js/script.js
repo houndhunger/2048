@@ -89,7 +89,7 @@ function drawGameBoard() {
 
 function eraseGameBoard() {
         GAME_FIELD.innerHTML = '';
-        GAME_SCORE.innerHTML = '';
+        GAME_SCORE.innerHTML = '0';
     }
 
 function genNewNumber() {
@@ -99,11 +99,12 @@ function genNewNumber() {
     } while (squares[randomPosition].innerHTML != 0);
     const randomNumber = Math.random() < 0.9 ? 2 : 4;
     squares[randomPosition].innerHTML = randomNumber;
-    styleNumber(squares[randomPosition], randomNumber);
+    styleNumber(squares[randomPosition], "NEW" + randomNumber);
 }
 
 /** Write score to div  */
 function addScore(add) {
+    add === '' ? add = '0' : undefined;
     GAME_SCORE.innerHTML = parseInt(GAME_SCORE.innerHTML) + parseInt(add);
 }
 
@@ -167,81 +168,78 @@ function handleKeyDown(event) {
 
 /** Slide functions */
 function slideLeft() {
-    let slideCheck = false;
+    let didSlide = false;
     for (let i = 0; i < FIELD_WIDTH; i++) {
         let shift = 0;
         for (let j = 0; j < FIELD_WIDTH; j++) {
             let ind = i * FIELD_WIDTH + j;
-            squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
-            squares[ind - shift].innerHTML = squares[ind].innerHTML;
-            styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
-            if (squares[ind].innerHTML === '') shift++;
-            else if (shift > 0 && squares[ind].innerHTML != 0) {
-                squares[ind].innerHTML = '';
-                styleNumber(squares[ind], squares[ind].innerHTML);
-            }
+            let result = slideOp(ind, shift, 1, didSlide, "slideLeft");
+            didSlide =  didSlide || result.didSlide;
+            shift = result.shift;
         }
     }
-    return slideCheck;
+    return didSlide;
 }
 
 function slideRight() {
-    let slideCheck = false;
+    let didSlide = false;
     for (let i = FIELD_WIDTH - 1; i >= 0; i--) {
         let shift = 0;
         for (let j = FIELD_WIDTH - 1; j >= 0; j--) {
             let ind = i * FIELD_WIDTH + j;
-            squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
-            squares[ind + shift].innerHTML = squares[ind].innerHTML;
-            styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
-            if (squares[ind].innerHTML === '') shift++;
-            else if (shift > 0 && squares[ind].innerHTML != 0) {
-                squares[ind].innerHTML = '';
-                styleNumber(squares[ind], squares[ind].innerHTML);
-            }
+            let result = slideOp(ind, shift, 1, didSlide, "slideRight");
+            didSlide =  didSlide || result.didSlide;
+            shift = result.shift;
         }
     }
-    return slideCheck;
+    return didSlide;
 }
 
 function slideUp() {
-    let slideCheck = false;
+    let didSlide = false;
     for (let i = 0; i < FIELD_WIDTH; i++) {
         let shift = 0;
         for (let j = 0; j < FIELD_WIDTH; j++) {
             let ind = j * FIELD_WIDTH + i;
-            squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
-            squares[ind - shift].innerHTML = squares[ind].innerHTML; 
-            styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
-            if (squares[ind].innerHTML === '') shift = shift + FIELD_WIDTH;
-            else if (shift > 0 && squares[ind].innerHTML != 0) {
-                squares[ind].innerHTML = '';
-                styleNumber(squares[ind], squares[ind].innerHTML);
-                slideCheck++;
-            }
+            let result = slideOp(ind, shift, FIELD_WIDTH, didSlide, "slideUp");
+            didSlide =  didSlide || result.didSlide;
+            shift = result.shift;
         }
     }
-    return slideCheck;
+    return didSlide;
 }
 
 function slideDown() {
-    let slideCheck = false;
+    let didSlide = false;
     for (let i = FIELD_WIDTH - 1; i >= 0; i--) {
         let shift = 0;
         for (let j = FIELD_WIDTH - 1; j >= 0; j--) {
             let ind = j * FIELD_WIDTH + i;
-            squares[ind].innerHTML > 0 && shift > 0 ? slideCheck = true : undefined;
-            squares[ind + shift].innerHTML = squares[ind].innerHTML; 
-            styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
-            if (squares[ind].innerHTML === '') shift = shift + FIELD_WIDTH;
-            else if (shift > 0 && squares[ind].innerHTML != 0) {
-                squares[ind].innerHTML = '';
-                styleNumber(squares[ind], squares[ind].innerHTML);
-                slideCheck++;
-            }
+            let result = slideOp(ind, shift, FIELD_WIDTH, didSlide, "slideDown");
+            didSlide =  didSlide || result.didSlide;
+            shift = result.shift;
         }
     }
-    return slideCheck;
+    return didSlide;
+}
+
+function slideOp(ind, shift, shiftConst, didSlide, direction) {
+    squares[ind].innerHTML > 0 && shift > 0 ? didSlide = true : undefined;
+    if ((direction === "slideDown" || direction === "slideRight") && shift>0) {
+        squares[ind + shift].innerHTML = squares[ind].innerHTML;
+        styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
+    } 
+    else  if (shift>0) {
+        squares[ind - shift].innerHTML = squares[ind].innerHTML;
+        styleNumber(squares[ind - shift], squares[ind - shift].innerHTML);
+    }
+    if (squares[ind].innerHTML === '') shift = shift + shiftConst;
+    else if (shift > 0 && squares[ind].innerHTML != 0) {
+        squares[ind].innerHTML = '';
+        styleNumber(squares[ind], squares[ind].innerHTML);
+    }
+    let result = { "didSlide": didSlide, "shift": shift };
+    return result;
 }
 
 /* Merge function to merge adjacent numbers if equal */
@@ -250,7 +248,6 @@ function merge(way) {
     if (way == "mergeRight" || way == "mergeDown") {
         let indShift = way == "mergeRight" ? -1 : -FIELD_WIDTH;
         for (let i = FIELD_WIDTH - 1; i >= 0; i--) {
-            //let shift = 0;
             for (let j = FIELD_WIDTH - 1; j >= 1; j--) {
                 let ind = way == "mergeRight" ? i * FIELD_WIDTH + j : j * FIELD_WIDTH + i;
                 if (squares[ind].innerHTML === squares[ind + indShift].innerHTML && squares[ind].innerHTML !== '') {
@@ -263,7 +260,6 @@ function merge(way) {
     } else if (way == "mergeLeft" || way == "mergeUp") {
         let indShift = way == "mergeLeft" ? 1 : FIELD_WIDTH;
         for (let i = 0; i <= FIELD_WIDTH - 1; i++) {
-            //let shift = 0;
             for (let j = 0; j <= FIELD_WIDTH - 2; j++) {
                 let ind = way == "mergeLeft" ? i * FIELD_WIDTH + j : j * FIELD_WIDTH + i;
                 if (squares[ind].innerHTML === squares[ind + indShift].innerHTML && squares[ind].innerHTML !== '') {
@@ -290,18 +286,18 @@ function mergeOps(ind, indShift) {
  * Game secondary functions
  */
 
-/** Check Win & Lost functions including end game popup message */
+/** Check Win & Lost sending result to modal message */
 function checkWin() {
-    let message = 'Congratualtions, you\'ve done it. You Won! :)' + checkBestScore();    
     if (squares.some(square => square.innerHTML === '2048')) {
+        let message = 'Congratualtions, you\'ve done it. You Won! :)' + checkBestScore();    
         popupMessage(message);
         return true;
     } 
     return false;
 }
 function checkLost() {
-    let message = 'You Lost :(' + checkBestScore();
     if (!squares.some(square => square.innerHTML === '')) {
+        let message = 'You Lost :(' + checkBestScore();
         popupMessage(message);
         return true;
     } else {
@@ -310,7 +306,6 @@ function checkLost() {
 }
 
 function popupMessage(message) {
-    //let potentialBest = checkBestScore();     
     document.getElementById('popup-message').innerHTML = message;
     document.getElementById("popup-container").style.display = "flex";
     document.getElementById("start-again-btn").addEventListener("click", function() {
@@ -326,16 +321,15 @@ function popupMessage(message) {
 /** Chcecks Game Score is Best Score */
 function checkBestScore() {
     let bestScr = localStorage.getItem('localBestScore');
-    if (GAME_SCORE.innerHTML > bestScr) {
+    if (parseInt(GAME_SCORE.innerHTML) > parseInt(bestScr)) {
         localStorage.setItem('localBestScore', GAME_SCORE.innerHTML);
         BEST_SCORE.innerHTML = GAME_SCORE.innerHTML;
-        return 'Your new Best score is ' + BEST_SCORE.innerHTML + '.';
+        return '\nYour new Best score is ' + BEST_SCORE.innerHTML + '.';
     } else {
         BEST_SCORE.innerHTML = bestScr === null ? '0' : bestScr;
         return '';
     }    
 }
-
 
 // Define the touchend event handler function
 function handleTouchEnd(event) {
@@ -363,12 +357,14 @@ function handleTouchEnd(event) {
  * Support functions
  */
 
-/** Style function for numer div - font and background colour  */
+/** Style background colour for div with number */
 function styleNumber(square, style) {
     const colorMap = {
         '': '#bbb',
         '2': '#afa',
         '4': '#6f6',
+        'NEW2': '#eee',
+        'NEW4': '#ddd',      
         '8': '#1f1',
         '16': '#3f0',
         '32': '#8f0',
@@ -378,10 +374,8 @@ function styleNumber(square, style) {
         '512': '#f40',
         '1024': '#f00',
         '2048': '#f00',
-    }
-        
+    }  
     square.style.backgroundColor = colorMap[style] || '';
-    //square.style.color = style === '' ? '#bbb' : '#333';
 }
 
 /** Remove Event Listeners */
