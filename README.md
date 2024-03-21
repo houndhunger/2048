@@ -73,10 +73,8 @@ The game interface consists of the following elements:
 ## Testing
 The website was tested in the Google Chrome browser for various screen sizes.
 Web accessibility evaluation was tested with [Wave](https://wave.webaim.org/):
-- [index.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/index.html)
-
-
-Only one Alert was outstanding - Redundant Link - Logo and Home in the Navigation menu have the same link to index.html.
+- [index.html](https://wave.webaim.org/report#/https://houndhunger.github.io/2048/)
+No errors or warnings were found.
 
 Analyzing with Lighthouse in Google Chrome was done with the following scores:
 
@@ -88,12 +86,8 @@ Improvements and issues (8) were caused by the 3rd party extension.
 
 ### Code validation
 HTML code was validated successfully with no errors or warnings:
-- [index.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Findex.html)
-- [activities.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Factivities.html)
-- [facilities.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Ffacilities.html)
-- [gallery.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Fgallery.html)
-- [friends.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Ffriends.html)
-- [contact.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Fcontact.html)
+- [index.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2F2048%2F)
+
 
 CSS validation with no errors:
 - [style.css](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Fassets%2Fcss%2Fstyle.css&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
