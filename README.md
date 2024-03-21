@@ -64,11 +64,101 @@ The game interface consists of the following elements:
 
 ## Technologies Used
 - **HTML:** Used for the structure and layout of the game interface.
-- **CSS:** Used for styling and visual design of the game elements.
+- **CSS:** Used for styling and visual design of the game elements. [Google fonts](https://fonts.google.com/) have been used.
 - **JavaScript:** Used for implementing the game logic, user interactions, and dynamic behavior.
 - **Responsive Design:** Utilized CSS media queries and flexible layouts to ensure compatibility across devices.
-- **ChatGPT** Used to help to find css solutions, find javascript code mistakes, gnenaerate bits of javascirpt or css, improving javascript code, generating structure for this readme etc.
+- **[ChatGPT](https://chat.openai.com/)** Used to help to find css solutions, find javascript code mistakes, gnenaerate bits of javascirpt or css, improving javascript code, generating structure for this readme etc.
 - **Excel:** Used to geneare colorMap with smooth colour tranzition to next number.
+
+## Testing
+The website was tested in the Google Chrome browser for various screen sizes.
+Web accessibility evaluation was tested with [Wave](https://wave.webaim.org/):
+- [index.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/index.html)
+- [activities.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/activities.html)
+- [facilities.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/facilities.html)
+- [gallery.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/gallery.html)
+- [friends.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/friends.html)
+- [contact.html](https://wave.webaim.org/report#/https://houndhunger.github.io/Rushcliffe-Country-Park/contact.html)
+
+Only one Alert was outstanding - Redundant Link - Logo and Home in the Navigation menu have the same link to index.html.
+
+Analyzing with Lighthouse in Google Chrome was done with the following scores:
+
+index.html | gallery.html | index.html - mobile device
+:---: | :---: | :---:
+![Analyzeing with Lighthouse - index.html](/readmedocs/testing-images/lighthouse-home.png) | ![Analyzeing with Lighthouse - galllery.html](/readmedocs/testing-images/lighthouse-gallery.png) | ![Analyzeing with Lighthouse - index.html for mobile device](/readmedocs/testing-images/lighthouse-mobile.png)
+
+Improvements and issues (8) were caused by the 3rd party extension.
+
+### Code validation
+HTML code was validated successfully with no errors or warnings:
+- [index.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Findex.html)
+- [activities.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Factivities.html)
+- [facilities.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Ffacilities.html)
+- [gallery.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Fgallery.html)
+- [friends.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Ffriends.html)
+- [contact.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Fcontact.html)
+
+CSS validation with no errors:
+- [style.css](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fhoundhunger.github.io%2FRushcliffe-Country-Park%2Fassets%2Fcss%2Fstyle.css&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
+
+### Test cases
+
+- Home - image cover:
+    - When the user accesses the Home page, an image cover scales to 100% width or height to cover the screen. This cover image is responsive to changes in screen size to maintain its coverage. Users can scroll down to reach the footer.
+    
+    ![Test case - Home](/readmedocs/testing-images/home.png)
+---
+- Activities:
+    - The user opens the Activities section by clicking on "Activities" in the Navigation menu, leading to the display of the Activities and Events section.
+    - Within this section, users can play a video by clicking on it, and pause it by clicking again. Video controls are visible at the bottom of the video.
+    
+    ![Test case - Activities](/readmedocs/testing-images/activities.png)
+    - Users can navigate further through relevant links on the webpage.
+    
+    ![Test case - Activities](/readmedocs/testing-images/activities2.png)
+ ---
+- Gallery - size responsiveness and modal:
+    
+    ![Test case - Gallery](/readmedocs/feature-images/gallery.png)
+    - To access the Gallery, the user clicks on "Gallery" in the Navigation menu. The gallery is then displayed in a column format, with the number of columns adjusting based on the screen size.
+    - Users can click on a photo in the gallery to enlarge it, displaying a modal with the enlarged photo.
+    
+    ![Test case - Gallery - modal](/readmedocs/feature-images/gallery-modal.png)
+    - The modal can be closed by clicking anywhere on the screen or the "X" symbol in the top right corner of the modal for an obvious action.
+    - Users can then open another photo to display the modal.
+ ---
+- Facilities:
+    - Users open the Facilities section by clicking on "Facilities" in the Navigation menu, leading to the display of the Facilities section.
+    - Users can navigate further through relevant links on the webpage.
+    
+    ![Test case - Facilities](/readmedocs/testing-images/facilities.png)
+ ---
+- Friends:
+    - Users open the Friends section by clicking on "Friends" in the Navigation menu, leading to the display of the Friends section.
+    - Users can navigate further through relevant links on the webpage.
+    
+    ![Test case - Friends](/readmedocs/testing-images/friends.png)
+ ---
+- Contact - Size Responsiveness, Form Restrictions, and Form Submission:
+    - Users access the Contact section by clicking on "Contact" in the Navigation menu, leading to the display of the Contact section with a Contact form and a Google map displaying the park's location.
+    
+    ![Test case - Contact](/readmedocs/testing-images/contact.png)
+    - The webpage displays correctly on medium-sized screens like iPad Air.
+    
+    ![Test case - Contact - iPad Air](/readmedocs/testing-images/contact-medium-screen.png)
+    - The webpage also displays correctly on small screens like Galaxy Fold.
+    
+    ![Test case - Contact - Galaxy Fold](/readmedocs/testing-images/contact-mobile.png)
+    - Users are required to fill in their First Name and Last Name.
+    
+    ![Test case - Contact - fill](/readmedocs/testing-images/contact-fill1.png)
+    - Users must enter their email address correctly.
+    
+    ![Test case - Contact - fill](/readmedocs/testing-images/contact-fill2.png)
+    - The form was submitted successfully.
+    
+    ![Test case - Contact - submiy](/readmedocs/testing-images/contact-submit.png)
 
 ## Deployment
 The 2048 game can be deployed as a standalone web application or hosted on a web server for online access. It can be easily integrated into existing websites or platforms for users to enjoy.
@@ -91,13 +181,13 @@ Upon completing any modifications:
 4. Refreshing the [Rushcliffe Country Park Github](https://houndhunger.github.io/Rushcliffe-Country-Park/) webpage reflected the updates.
 
 ## Credits
-- The original 2048 game was created by Gabriele Cirulli. Our project is inspired by his innovative game concept.
+- The original 2048 game was created by Gabriele Cirulli. My project is inspired by his innovative game concept.
 - Game is already on github as vanila game. [GitHub - kubowania - 2048](whttps://github.com/kubowania/2048/)
 - [Game algorithm](https://www.baeldung.com/cs/2048-algorithm)
 I went through quckly the structure of the code to give me a hint and kickstart. Since first function, I aranged the code myself.
 - Some inspiration also [working game](https://2048game.com/)
 - Some online tutorials, like help with [flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/), provided valuable insights and assistance during the development process, but mostly assitance from ChatGPT.
-- Big Thank You to my mentor who points me right direction every time.
+- Big Thank You to my mentor Rohit Sharma who points me right direction every time.
 
 ## License
 This project is open-source and available under the MIT License. Feel free to fork, modify, and distribute the code for educational or commercial purposes.

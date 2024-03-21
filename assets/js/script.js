@@ -33,7 +33,7 @@ function initializeGame() {
     setNewGame();
     addEventListeners();
 
-    document.getElementById('new-game-title').addEventListener('click', resetGame);
+    document.getElementById('new-game').addEventListener('click', resetGame);
 }
 
 /**  Handles touch end - swipe */
@@ -55,7 +55,7 @@ function handleTouchEnd(event) {
         } else if (diffY < -10) {
             handleKeyDown({ key: 'ArrowUp' });
         }
-    }
+    }   
 }
 function touchStart(event) {
     startX = event.touches[0].clientX;
@@ -320,7 +320,7 @@ function checkBestScore() {
     if (parseInt(GAME_SCORE.innerHTML) > parseInt(bestScr)) {
         localStorage.setItem('localBestScore', GAME_SCORE.innerHTML);
         BEST_SCORE.innerHTML = GAME_SCORE.innerHTML;
-        return '\nYour new Best score is ' + BEST_SCORE.innerHTML + '.';
+        return '<br>Your new Best score is ' + BEST_SCORE.innerHTML + '.';
     } else {
         BEST_SCORE.innerHTML = bestScr === null ? '0' : bestScr;
         return '';

@@ -39,6 +39,7 @@ header {
 }
 
 header > a {
+  display: flex;
   text-decoration: none;
   color: #333;
 }
@@ -61,14 +62,21 @@ header > a {
   padding: 10px;
   border-radius: 5px;
   text-align: center;
-  font-size: 0.8em;
+  font-size: 1.1em;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 .nav-display {
   background-color: #aaa;
   color: #333;
 }
+
+#best-score-value, #score-value {
+  font-weight: normal;
+}
+
 
 #best-score {
   margin: 10px 15px 0 0;
@@ -80,17 +88,13 @@ header > a {
   cursor: pointer;
 }
 
-.nav-dispaly h2, .nav-button h2  {
-  text-transform: uppercase;
-}
-
 #score-box {
   display: flex;
   width: 100%;
 }
 
 /* Text content */
-#instructions {
+ #instructions {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -107,7 +111,7 @@ header > a {
   display: none;
 }
 
-/* Hide instructions by default */
+/* Instructions and hide by default */
 #instructions-text {
   font-size: 0.85em;
   margin: 15px 0;
