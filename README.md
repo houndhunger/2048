@@ -91,7 +91,7 @@ Analyzing with Lighthouse in Google Chrome was done with full 100% score:
 - [index.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2F2048%2F)
 - **CSS** validation with no errors:
 - [style.css](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fhoundhunger.github.io%2F2048%2Fassets%2Fcss%2Fstyle.css&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
-- **JavaScript** errors or potential problems were identified with analized [JSHint](hhttps://jshint.com/)
+- **JavaScript** errors or potential problems were identified with [JSHint](hhttps://jshint.com/). New JavaScript features (ES6) are on.
 Metrics informed me that there is room for improvements. Because of lack of time I couldn't improve the code more. More improvements will happened in future releases.
 There is lot of warnning which I find acceptable. Important is there are no errors.
 

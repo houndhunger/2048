@@ -55,7 +55,7 @@ function handleTouchEnd(event) {
         } else if (diffY < -10) {
             handleKeyDown({ key: 'ArrowUp' });
         }
-    }   
+    }
 }
 function touchStart(event) {
     startX = event.touches[0].clientX;
@@ -94,7 +94,7 @@ function setNewGame() {
     document.addEventListener('keydown', handleKeyDown);
     // handle touch
     document.addEventListener('touchend', handleTouchEnd);
-    
+
     document.getElementById("popup-container").style.display = "none";
 }
 
@@ -119,7 +119,7 @@ function clearGameBoard() {
 
 /** Reset game - shows modal message and sets new game */
 function resetGame() {
-    popupMessage("Do you want to start new game?") ? setNewGame() : undefined;
+    if (popupMessage("Do you want to start new game?")) { setNewGame(); }
 }
 
 /** Game move - cicle - read arrow keys */
@@ -130,7 +130,7 @@ function handleKeyDown(event) {
     let slideCheck2 = false;
 
     // Prevent the default scrolling behavior
-    event.key.startsWith("Arrow") ? event.preventDefault() : undefined;
+    if (event.key.startsWith("Arrow")) { event.preventDefault(); }
 
     // Hide instructions, it might be displayed
     document.getElementById("instructions-toggle").checked = false;
@@ -158,10 +158,15 @@ function handleKeyDown(event) {
             break;
         default:
             break;
-    } 
-    
+    }
+
     // if ok generate number
-    (checkWin() || checkLost()) ? removeEventListeners() : (mergeCheck || slideCheck1 || slideCheck2 ? genNewNumber() : undefined);
+    if ((checkWin() || checkLost())) {
+        removeEventListeners(); 
+    } else if (mergeCheck || slideCheck1 || slideCheck2) 
+    {
+        genNewNumber();
+    }
 }
 
 /** Generate new number - 90% no. 2 or 10% no. 4 */
@@ -233,7 +238,7 @@ function slideDown() {
 }
 
 function slideOp(ind, shift, shiftConst, didSlide, direction) {
-    squares[ind].innerHTML > 0 && shift > 0 ? didSlide = true : undefined;
+    if (squares[ind].innerHTML > 0 && shift > 0) { didSlide = true; }
     if ((direction === "slideDown" || direction === "slideRight") && shift > 0) {
         squares[ind + shift].innerHTML = squares[ind].innerHTML;
         styleNumber(squares[ind + shift], squares[ind + shift].innerHTML);
@@ -327,7 +332,7 @@ function checkBestScore() {
 
 /** Write score to div score board  */
 function addScore(add) {
-    add === '' ? add = '0' : undefined;
+    if (add === '') { add = '0'; }
     GAME_SCORE.innerHTML = parseInt(GAME_SCORE.innerHTML) + parseInt(add);
 }
 
