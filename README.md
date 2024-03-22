@@ -68,7 +68,6 @@ The game interface consists of the following elements:
 
 ## Unsolved Bugs
 - **Overscroll behavior** has been managed through CSS styling to prevent unintended page refreshes, particularly when users engage with the game on the Android Chrome browser. However, it doesn't entirely hinder users from inadvertently moving the game board around when swiping, especially when zoomed in. To ensure seamless control, users are advised to zoom out to play the game comfortably.
-- **Square with no. 2 Display Issue**: Occasionally, square with no. 2 remains on the field without being colored light green. This anomaly stems from a potential logic error within the code, warranting further investigation for resolution.
 - **Game logic error** recently discovered due to a flaw in my script's logic. The correct game logic for the array [2, 2, 2, 2] after a move should result in [4, 4, 0, 0], which functions as expected. However, in the case of [2, 2, 0, 4], the result is [8, 0, 0, 0]. The issue lies in the algorithm's, where first it correctly merges the 1st and 2nd elements to yield [4, 0, 0, 4]. Subsequently, the flawed logic merges the 1st and 4th elements, resulting in [8, 0, 0, 0].
 
 | Next move is slie up, should be resulting  in two fours| Faulty script logic merges it to one eight number, also show two no.2 grey boxes, which sholud be already light green |  |  |  |
@@ -91,8 +90,11 @@ Web accessibility evaluation was tested with [Wave](https://wave.webaim.org/):
 No Errors or Alerts were identified.
 
 Analyzing with Lighthouse in Google Chrome was done with full 100% score:
-[Lighthouse score](/readmedocs/testing-images/lighthouse-mobile.png)
 ![Lighthouse score](readmedocs/testing-images/lighthouse.png)
+
+## Supported screens and browsers
+The website was developed and tested on Google Chrome. It's working correctly for Small screen sizes, like Galaxy Fold, as well as for large screens. File style.css optimizes web for these screen width changes: 365px and 487px.
+![Responsive design](readmedocs/responsive-design.png)
 
 ### Code validation 
 - **HTML** code was validated successfully with no errors or warnings:
