@@ -104,11 +104,7 @@ Metrics identified areas for code improvement, but due to time constraints, I co
 
 **GAME END & BEST SCORE**
 - User ends the game and surpasses their previous best score, ensuring successful updating of the best score.
-![alt text1](readmedocs/testing-images/game-end-best-score-1.png)
-![alt text2](readmedocs/testing-images/game-end-best-score-2.png)
-![alt text3](readmedocs/testing-images/game-end-best-score-3.png)
-![alt text4](readmedocs/testing-images/game-end-best-score-4.png)
-![alt text5](readmedocs/testing-images/game-end-best-score-5.png)
+![alt text1](readmedocs/testing-images/game-end-best-score-1.png)![alt text2](readmedocs/testing-images/game-end-best-score-2.png)![alt text3](readmedocs/testing-images/game-end-best-score-3.png)![alt text4](readmedocs/testing-images/game-end-best-score-4.png)![alt text5](readmedocs/testing-images/game-end-best-score-5.png)
 
 **GAME END - LOST**
 - User loses the game, triggering a modal popup message and potentially updating the best score. Both ending the game and restarting function correctly.
