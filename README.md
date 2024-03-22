@@ -95,6 +95,7 @@ Analyzing with Lighthouse in Google Chrome was done with full 100% score:
 ## Supported screens and browsers
 The website was developed and tested on Google Chrome. It's working correctly for Small screen sizes, like Galaxy Fold, as well as for large screens. File style.css optimizes web for these screen width changes: 365px and 487px.
 ![Responsive design](readmedocs/responsive-design.png)
+*Image was generated using this [blog](https://ui.dev/amiresponsive?url=https%3A%2F%2Fusersnap.com%2Fblog)
 
 ### Code validation 
 - **HTML** code was validated successfully with no errors or warnings:
