@@ -84,22 +84,31 @@ Web accessibility evaluation was tested with [Wave](https://wave.webaim.org/):
 No Errors or Alerts were identified.
 
 Analyzing with Lighthouse in Google Chrome was done with full 100% score:
-[Lghthouse score](/readmedocs/testing-images/lighthouse-mobile.png)
+[Lighthouse score](/readmedocs/testing-images/lighthouse-mobile.png)
 
 ### Code validation 
 - **HTML** code was validated successfully with no errors or warnings:
 - [index.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fhoundhunger.github.io%2F2048%2F)
 - **CSS** validation with no errors:
 - [style.css](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fhoundhunger.github.io%2F2048%2Fassets%2Fcss%2Fstyle.css&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
-- **JavaScript** errors or potential problems were identified with [JSHint](hhttps://jshint.com/). New JavaScript features (ES6) are on.
-Metrics analysis revealed opportunities for improvement in the code. Due to time constraints, I was unable to address all of them thoroughly. However, I plan to implement further enhancements in future releases, such as optimizing the code and potentially organizing it into multiple script files.
+- **JavaScript** errors or potential problems were identified with [JSHint](hhttps://jshint.com/). New JavaScript features (ES6) settings is turned on.
+Results show no errors.
+Metrics identified areas for code improvement, but due to time constraints, I couldn't address them fully. Future updates will optimize the code and possibly split it into multiple files.
 
 ### Test Cases
 **PLAY GAME**
 - User plays the game, sliding and merging tiles to achieve higher numbers.
+![Test case - Activities](/readmedocs/testing-images/activities.png)
+    - Users can navigate further through relevant links on the webpage.
+
 
 **GAME END & BEST SCORE**
 - User ends the game and surpasses their previous best score, ensuring successful updating of the best score.
+![alt text1](readmedocs/testing-images/game-end-best-score-1.png)
+![alt text2](readmedocs/testing-images/game-end-best-score-2.png)
+![alt text3](readmedocs/testing-images/game-end-best-score-3.png)
+![alt text4](readmedocs/testing-images/game-end-best-score-4.png)
+![alt text5](readmedocs/testing-images/game-end-best-score-5.png)
 
 **GAME END - LOST**
 - User loses the game, triggering a modal popup message and potentially updating the best score. Both ending the game and restarting function correctly.
