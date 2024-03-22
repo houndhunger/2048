@@ -68,7 +68,7 @@ The game interface consists of the following elements:
 
 ## Unsolved Bugs
 - **Overscroll behavior** has been managed through CSS styling to prevent unintended page refreshes, particularly when users engage with the game on the Android Chrome browser. However, it doesn't entirely hinder users from inadvertently moving the game board around when swiping, especially when zoomed in. To ensure seamless control, users are advised to zoom out to play the game comfortably.
--**Square with no. 2 Display Issue**: Occasionally, square with no. 2 remains on the field without being colored light green. This anomaly stems from a potential logic error within the code, warranting further investigation for resolution.
+- **Square with no. 2 Display Issue**: Occasionally, square with no. 2 remains on the field without being colored light green. This anomaly stems from a potential logic error within the code, warranting further investigation for resolution.
 - **Game logic error** recently discovered due to a flaw in my script's logic. The correct game logic for the array [2, 2, 2, 2] after a move should result in [4, 4, 0, 0], which functions as expected. However, in the case of [2, 2, 0, 4], the result is [8, 0, 0, 0]. The issue lies in the algorithm's, where first it correctly merges the 1st and 2nd elements to yield [4, 0, 0, 4]. Subsequently, the flawed logic merges the 1st and 4th elements, resulting in [8, 0, 0, 0].
 
 | Next move is slie up, should be resulting  in two fours| Faulty script logic merges it to one eight number, also show two no.2 grey boxes, which sholud be already light green |  |  |  |
@@ -180,7 +180,7 @@ Upon completing any modifications:
 1. I added the changes using the command: ```git add .```
 2. Followed by committing them with a descriptive message: ```git commit -m “Something done”```
 3. Finally, I pushed the changes to the GitHub repository: ```git push```
-4. Refreshing the [Rushcliffe Country Park Github](https://houndhunger.github.io/Rushcliffe-Country-Park/) webpage reflected the updates.
+4. Refreshing the [2048 game](https://houndhunger.github.io/2048/) webpage reflected the updates.
 
 ## Credits
 - The original 2048 game was created by Gabriele Cirulli. My project is inspired by his innovative game concept.
