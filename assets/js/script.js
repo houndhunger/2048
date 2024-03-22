@@ -126,16 +126,20 @@ function setNewGame() {
  * Set the game board.
  */
 function drawGameBoard() {
-    for (let i = 0; i < FIELD_WIDTH * FIELD_WIDTH; i++) {
-        let square = document.createElement('div');
-        square.innerHTML = '';
-        GAME_FIELD.appendChild(square);
-        styleNumber(square, '');
-        squares.push(square);
+    for (let i = 1; i <= FIELD_WIDTH; i++) {
+        for (let j = 1; j <= FIELD_WIDTH; j++) {
+            let square = document.createElement('div');
+            square.innerHTML = '';
+            square.setAttribute('aria-label', 'Tile ' + (i) + '-' + (j));
+            GAME_FIELD.appendChild(square);
+            styleNumber(square, '');
+            squares.push(square);
+        }
     }
     genNewNumber();
     genNewNumber();
 }
+
 
 /** 
  * Clear the game board.
