@@ -114,6 +114,7 @@ function setNewGame() {
 
     clearGameBoard();
     drawGameBoard();
+    checkBestScore();
 
     addEventListeners();
 
