@@ -68,6 +68,13 @@ The game interface consists of the following elements:
 
 ## Unsolved Bugs
 - **Overscroll behavior** has been managed through CSS styling to prevent unintended page refreshes, particularly when users engage with the game on the Android Chrome browser. However, it doesn't entirely hinder users from inadvertently moving the game board around when swiping, especially when zoomed in. To ensure seamless control, users are advised to zoom out to play the game comfortably.
+-**Square with no. 2 Display Issue**: Occasionally, square with no. 2 remains on the field without being colored light green. This anomaly stems from a potential logic error within the code, warranting further investigation for resolution.
+- **Game logic error** recently discovered due to a flaw in my script's logic. The correct game logic for the array [2, 2, 2, 2] after a move should result in [4, 4, 0, 0], which functions as expected. However, in the case of [2, 2, 0, 4], the result is [8, 0, 0, 0]. The issue lies in the algorithm's, where first it correctly merges the 1st and 2nd elements to yield [4, 0, 0, 4]. Subsequently, the flawed logic merges the 1st and 4th elements, resulting in [8, 0, 0, 0].
+
+| Next move is slie up, should be resulting  in two fours| Faulty script logic merges it to one eight number, also show two no.2 grey boxes, which sholud be already light green |  |  |  |
+|:-:|:-:|:-:|:-:|:-:|
+|![two fours](readmedocs/bugs-images/script-logic-error-1.png) | ![one eight number](readmedocs/bugs-images/script-logic-error-2.png) | ![blank](readmedocs/blank.png)| ![blank](readmedocs/blank.png)| ![blank](readmedocs/blank.png) |
+
 
 ## Technologies Used
 - **HTML:** Used for the structure and layout of the game interface.
@@ -98,61 +105,61 @@ Metrics identified areas for code improvement, but due to time constraints, I co
 ### Test Cases
 **PLAY GAME**
 - User plays the game, sliding and merging tiles to achieve higher numbers.
-![Test case - Activities](/readmedocs/testing-images/activities.png)
-    - Users can navigate further through relevant links on the webpage.
 
+|Two numbers appears randomly | Slide down | Slide left | Slide down |  |
+|:-|:-|:-|:-|:-|
+| ![game start](readmedocs/testing-images/play-game-1.png) | ![slide down](readmedocs/testing-images/play-game-2.png) | ![slide left](readmedocs/testing-images/play-game-3.png) | ![slide down](readmedocs/testing-images/play-game-4.png) | ![blank](readmedocs/blank.png) |
+
+---
+---
 
 **GAME END & BEST SCORE**
 - User ends the game and surpasses their previous best score, ensuring successful updating of the best score.
-![alt text1](readmedocs/testing-images/game-end-best-score-1.png)![alt text2](readmedocs/testing-images/game-end-best-score-2.png)![alt text3](readmedocs/testing-images/game-end-best-score-3.png)![alt text4](readmedocs/testing-images/game-end-best-score-4.png)![alt text5](readmedocs/testing-images/game-end-best-score-5.png)
+
+| Game end is near, next slide goes down | Next slide goes left | Board is full, next slide needs to be merge or end of game | End of game with new High score | New game |
+|:-|:-|:-|:-|:-|
+| ![Game end is near](readmedocs/testing-images/game-end-best-score-1.png) | ![slide left](readmedocs/testing-images/game-end-best-score-2.png) | ![full board](readmedocs/testing-images/game-end-best-score-3.png) | ![end of game](readmedocs/testing-images/game-end-best-score-4.png) | ![new game](readmedocs/testing-images/game-end-best-score-5.png) |
+
+---
+---
 
 **GAME END - LOST**
 - User loses the game, triggering a modal popup message and potentially updating the best score. Both ending the game and restarting function correctly.
 
+|End end of game is near, next is slide up | Board is full, next slide ends the game | Game is lost without new high score | New game| |
+|:-|:-|:-|:-|:-|
+![ame end is near](readmedocs/testing-images/game-end-lost-1.png) | ![full board](readmedocs/testing-images/game-end-lost-2.png) | ![end of game](readmedocs/testing-images/game-end-lost-3.png) | ![new game](readmedocs/testing-images/game-end-lost-4.png) | ![blank](readmedocs/blank.png)
+
+---
+---
+
 **GAME WIN & BEST SCORE**
 - User wins the game, resulting in a modal popup message and possible update of the best score. Both ending the game and restarting work as expected.
 
+| End end of game us near, next is slide down | Next is slide up | Board is full, next slide ends the game | Game is Lost with new high score, best score is updated | New game starts by clicking Start Again |
+|:-|:-|:-|:-|:-|
+| ![](readmedocs/testing-images/game-end-best-score-1.png) | ![](readmedocs/testing-images/game-end-best-score-2.png) | ![](readmedocs/testing-images/game-end-best-score-3.png) | ![](readmedocs/testing-images/game-end-best-score-4.png) | ![new game](readmedocs/testing-images/game-end-best-score-5.png) |
+
+---
+---
+
 **INSTRUCTIONS**
-- User clicks on the INSTRUCTIONS button, causing the instructions to slide down and up. Additionally, the instructions slide back up when the user starts playing, bringing the game board back into view.
+- User clicks on the INSTRUCTIONS button, causing the instructions to slide down and up. Additionally, the instructions slides back up when the user starts playing with Arrow Up key, bringing the game board back into view.
+
+| New game | User clicks on INSTRUCTIONS button, Instructions slides down | Next user hits Arrow Up key and Instructions rolls back up |  |  |
+|:-|:-|:-|:-|:-|
+| ![new game](readmedocs/testing-images/instructions-1.png) | ![instructions](readmedocs/testing-images/instructions-2.png) | ![Arrow up key](readmedocs/testing-images/instructions-3.png) | ![blank](readmedocs/blank.png) | ![blank](readmedocs/blank.png) |
+
+---
+---
 
 **NEW GAME**
 - User restarts the game, initiating in by clicking on NEW GAME button. 
 First time user Cancel andd plays one more move. Then initiates it and confirms it by clicking on Start againa new game successfully by resetting the board, tiles, and score.
 
-
-- Home - image cover:
-    - When the user accesses the Home page, an image cover scales to 100% width or height to cover the screen. This cover image is responsive to changes in screen size to maintain its coverage. Users can scroll down to reach the footer.
-    
-    ![Test case - Home](/readmedocs/testing-images/home.png)
----
-- Activities:
-    - The user opens the Activities section by clicking on "Activities" in the Navigation menu, leading to the display of the Activities and Events section.
-    - Within this section, users can play a video by clicking on it, and pause it by clicking again. Video controls are visible at the bottom of the video.
-    
-    ![Test case - Activities](/readmedocs/testing-images/activities.png)
-    - Users can navigate further through relevant links on the webpage.
-    
-    ![Test case - Activities](/readmedocs/testing-images/activities2.png)
- ---
-- Contact - Size Responsiveness, Form Restrictions, and Form Submission:
-    - Users access the Contact section by clicking on "Contact" in the Navigation menu, leading to the display of the Contact section with a Contact form and a Google map displaying the park's location.
-    
-    ![Test case - Contact](/readmedocs/testing-images/contact.png)
-    - The webpage displays correctly on medium-sized screens like iPad Air.
-    
-    ![Test case - Contact - iPad Air](/readmedocs/testing-images/contact-medium-screen.png)
-    - The webpage also displays correctly on small screens like Galaxy Fold.
-    
-    ![Test case - Contact - Galaxy Fold](/readmedocs/testing-images/contact-mobile.png)
-    - Users are required to fill in their First Name and Last Name.
-    
-    ![Test case - Contact - fill](/readmedocs/testing-images/contact-fill1.png)
-    - Users must enter their email address correctly.
-    
-    ![Test case - Contact - fill](/readmedocs/testing-images/contact-fill2.png)
-    - The form was submitted successfully.
-    
-    ![Test case - Contact - submiy](/readmedocs/testing-images/contact-submit.png)
+| In the middle of the game | User hits NEW GAME button, but Cancel it | This brings him back to game, next slide is left | User hits NEW GAME button again and confirms it by clicking on Start Again | This wil start new game |
+|:-|:-|:-|:-|:-|
+| ![middle of game](readmedocs/testing-images/new-game-1.png) | ![NEW GAME & Cancel](readmedocs/testing-images/new-game-2.png) | ![slide left](readmedocs/testing-images/new-game-3.png) | ![NEW GAME & Start Again](readmedocs/testing-images/new-game-4.png) | ![new game](readmedocs/testing-images/new-game-5.png) |
 
 
 ## Deployment
