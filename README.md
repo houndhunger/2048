@@ -68,6 +68,7 @@ The game interface consists of the following elements:
 - Removed the link from the logo to prevent accidental clicks during gameplay.
 
 ## Unsolved Bugs
+- **Overscroll behavior** has been managed through CSS styling to prevent unintended page refreshes, particularly when users engage with the game on the Android Chrome browser. However, it doesn't entirely hinder users from inadvertently moving the game board around when swiping, especially when zoomed in. To ensure seamless control, users are advised to zoom out to play the game comfortably.
 
 ## Technologies Used
 - **HTML:** Used for the structure and layout of the game interface.
