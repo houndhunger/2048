@@ -92,6 +92,7 @@ No Errors or Alerts were identified.
 
 Analyzing with Lighthouse in Google Chrome was done with full 100% score:
 [Lighthouse score](/readmedocs/testing-images/lighthouse-mobile.png)
+![Lighthouse score](readmedocs/testing-images/lighthouse.png)
 
 ### Code validation 
 - **HTML** code was validated successfully with no errors or warnings:
