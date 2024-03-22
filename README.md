@@ -36,7 +36,6 @@ The game interface consists of the following elements:
 - **New Game Button:** Allows players to start a new game at any time.
 - **Footer:** Includes developer contact information.
 
-
 ## Development Process
 1. **Initial Setup:** Set up the basic HTML structure and CSS styling for the game interface.
 2. **Grid Implementation:** Implemented the logic for generating and displaying the game grid with numbered tiles.
@@ -96,14 +95,24 @@ Analyzing with Lighthouse in Google Chrome was done with full 100% score:
 Metrics analysis revealed opportunities for improvement in the code. Due to time constraints, I was unable to address all of them thoroughly. However, I plan to implement further enhancements in future releases, such as optimizing the code and potentially organizing it into multiple script files.
 
 ### Test Cases
+**PLAY GAME**
 - User plays the game, sliding and merging tiles to achieve higher numbers.
 
+**GAME END & BEST SCORE**
 - User ends the game and surpasses their previous best score, ensuring successful updating of the best score.
 
+**GAME END - LOST**
 - User loses the game, triggering a modal popup message and potentially updating the best score. Both ending the game and restarting function correctly.
+
+**GAME WIN & BEST SCORE**
 - User wins the game, resulting in a modal popup message and possible update of the best score. Both ending the game and restarting work as expected.
-- User clicks on the Instructions button, causing the instructions to slide down and up. Additionally, the instructions slide back up when the user starts playing, bringing the game board back into view.
-- User restarts the game, initiating a new game successfully by resetting the board, tiles, and score.
+
+**INSTRUCTIONS**
+- User clicks on the INSTRUCTIONS button, causing the instructions to slide down and up. Additionally, the instructions slide back up when the user starts playing, bringing the game board back into view.
+
+**NEW GAME**
+- User restarts the game, initiating in by clicking on NEW GAME button. 
+First time user Cancel andd plays one more move. Then initiates it and confirms it by clicking on Start againa new game successfully by resetting the board, tiles, and score.
 
 
 - Home - image cover:
